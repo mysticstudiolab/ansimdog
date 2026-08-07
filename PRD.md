@@ -1,12 +1,12 @@
 # 안심하개(PRD) v1.1
 
-> Product Requirements Document
+> 제품 요구사항 문서
 >
 > 목적: Claude Code 및 개발자가 동일한 기준으로 개발할 수 있는 제품 설계 문서
 
 ---
 
-# 1. Product Vision
+# 1. 제품 비전
 
 ## 프로젝트 목표
 반려견의 일상 데이터를 쉽고 꾸준하게 기록하고 AI가 건강 변화 패턴을 분석하여 보호자가 작은 이상 신호를 놓치지 않도록 돕는다.
@@ -20,7 +20,7 @@
 
 ---
 
-# 2. Problem Statement
+# 2. 문제 정의
 
 ## 문제
 - 반려견은 자신의 상태를 말할 수 없다.
@@ -36,7 +36,7 @@
 
 ---
 
-# 3. User Research
+# 3. 사용자 리서치
 
 ## 타깃
 - 20~50대 보호자
@@ -83,7 +83,7 @@
 
 ---
 
-# 5. Product Philosophy
+# 5. 제품 철학
 
 1. 사용자는 기록하려고 앱을 열지 않는다.
 2. 오늘 우리 아이가 괜찮은지 확인하려고 앱을 연다.
@@ -93,7 +93,7 @@
 
 ---
 
-# 6. Emotional UX
+# 6. 감성 UX
 
 - 불안을 조장하지 않는다.
 - 보호자를 칭찬한다.
@@ -108,11 +108,11 @@
 
 ---
 
-# 7. IA
+# 7. 정보 구조(IA)
 
-Bottom Navigation
+하단 내비게이션
 
-1. Home
+1. 홈
 2. 건강기록
 3. 분석
 4. 일정
@@ -120,9 +120,9 @@ Bottom Navigation
 
 ---
 
-# 8. MVP
+# 8. 최소 기능 제품(MVP)
 
-## Home
+## 홈
 - 오늘의 안심
 - AI 브리핑
 - 오늘 기록
@@ -165,32 +165,32 @@ Bottom Navigation
 메모는 보조
 
 ## 식사
-full / half / refuse
+완식 / 반식 / 거부
 
 ## 물
-low / normal / high
+적음 / 보통 / 많음
 
 ## 산책
-none / under10 / under30 / over30 / over60
+없음 / 10분 미만 / 30분 미만 / 30분 이상 / 60분 이상
 
 ## 배변
-normal / soft / diarrhea / constipation / bloody
+정상 / 무름 / 설사 / 변비 / 혈변
 
 ## 증상
-- vomiting
-- cough
-- sneeze
-- lethargy
-- limping
-- skin
-- ear
-- eye
-- breathing
-- fever
-- drooling
-- appetite_loss
-- activity_loss
-- etc
+- 구토
+- 기침
+- 재채기
+- 무기력
+- 절뚝거림
+- 피부
+- 귀
+- 눈
+- 호흡
+- 발열
+- 침흘림
+- 식욕부진
+- 활동량감소
+- 기타
 
 ---
 
@@ -213,12 +213,12 @@ normal / soft / diarrhea / constipation / bloody
 ### Section 10-1. 약 및 일정 관리 상세 스펙 (v1.1 추가)
 
 - **반복 주기 지원**:
-  - 매일 (Daily)
-  - N일 간격 (Interval Days: 예 - 21일 간격 백신 접종)
-  - 매월 특정일 (Monthly: 예 - 매월 1일 심장사상충)
+  - 매일
+  - N일 간격 (예: 21일 간격 백신 접종)
+  - 매월 특정일 (예: 매월 1일 심장사상충)
 - **캘린더 UX**:
   - 미래 날짜 선택 시 '예정된 일정(병원, 접종, 약)' 등록 모달 호출
-  - 당일 완료 여부에 따른 Checkbox 상태 업데이트
+  - 당일 완료 여부에 따른 체크박스 상태 업데이트
 
 ---
 
@@ -256,15 +256,15 @@ normal / soft / diarrhea / constipation / bloody
 
 ### Section 12-1. AI 기술 가드레일 & 성능 (v1.1 추가)
 
-- **성능 최적화**: 매일 00:00 시점에 최근 7일 데이터를 기반으로 AI 브리핑을 사전 생성(Pre-generation)하여 DB 캐싱 처리 (Latency 최소화)
-- **Prompt Guardrail**:
-  - 병명(Diagnosis) 직접 언급 절대 금지
-  - 과거 대비 데이터 비교(Trend) 중심으로 작성 ("지난주 대비 배변 횟수가 2회 감소했습니다")
-  - 하단에 '의료 참고용' Disclaimer 필수 포함
+- **성능 최적화**: 매일 00:00 시점에 최근 7일 데이터를 기반으로 AI 브리핑을 사전 생성하여 DB 캐싱 처리 (지연 시간 최소화)
+- **프롬프트 가드레일**:
+  - 병명 직접 언급 절대 금지
+  - 과거 대비 데이터 비교(추세) 중심으로 작성 ("지난주 대비 배변 횟수가 2회 감소했습니다")
+  - 하단에 '의료 참고용' 안내 문구 필수 포함
 
 ---
 
-# 13. Database
+# 13. 데이터베이스
 
 Users
 
@@ -291,17 +291,17 @@ Schedule
 
 ---
 
-# 14. UX Principles
+# 14. UX 원칙
 
 - 3초 기록
 - 버튼 입력 우선
 - 자동 저장
 - 최소 클릭
-- 따뜻한 Tone
+- 따뜻한 톤
 
 ---
 
-# 15. Claude Code Rules
+# 15. Claude Code 규칙
 
 - 기존 구조 최대 활용
 - 컴포넌트 재사용
@@ -320,7 +320,7 @@ Schedule
 
 ---
 
-# 17. KPI
+# 17. 핵심 지표(KPI)
 
 - 기록 지속률
 - 주간 재방문율
@@ -330,7 +330,7 @@ Schedule
 
 ---
 
-# 18. Decision Log
+# 18. 의사결정 로그
 
 채택
 
@@ -352,13 +352,13 @@ Schedule
 
 ---
 
-# 19. Definition of Done
+# 19. 완료 정의(DoD)
 
 - UI 완료
 - 모바일 최적화
 - 저장 완료
-- Validation
-- Error 처리
+- 유효성 검사
+- 오류 처리
 - AI 반영
 - 통계 반영
 - 앱인토스 테스트 완료
