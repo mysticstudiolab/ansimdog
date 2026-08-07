@@ -66,15 +66,15 @@ function DogForm({
       const uid = userData.user?.id;
       if (!uid) throw new Error('세션을 확인할 수 없어요.');
 
-      const ext = file.name.includes('.') ? file.name.split('.').pop() : 'jpg';
+      const ext = file.name.includes('.') ? file.name.split('.').pop()?.toLowerCase() || 'jpg' : 'jpg';
       const path = `${uid}/${initial?.id ?? 'new'}-${Date.now()}.${ext}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('dog-photos')
+        .from('ansimdog-dog-photos')
         .upload(path, file, { upsert: true });
       if (uploadError) throw uploadError;
 
-      const { data: publicUrlData } = supabase.storage.from('dog-photos').getPublicUrl(path);
+      const { data: publicUrlData } = supabase.storage.from('ansimdog-dog-photos').getPublicUrl(path);
       setForm((f) => ({ ...f, photo_url: publicUrlData.publicUrl }));
     } catch {
       setPhotoError('사진 업로드에 실패했어요. 잠시 후 다시 시도해주세요.');
@@ -87,8 +87,19 @@ function DogForm({
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
-    setSaving(true);
     setError(null);
+
+    if (form.weight_kg !== undefined && form.weight_kg !== null && (isNaN(form.weight_kg) || form.weight_kg <= 0)) {
+      setError('몸무게는 0보다 큰 숫자여야 해요.');
+      return;
+    }
+
+    if (form.meal_target !== undefined && (isNaN(form.meal_target) || form.meal_target < 1 || form.meal_target > 10)) {
+      setError('하루 급식 목표 횟수는 1~10회 사이여야해요.');
+      return;
+    }
+
+    setSaving(true);
 
     const payload = {
       name: form.name.trim(),
@@ -301,6 +312,7 @@ export default function DogProfile({
 }: DogProfileProps) {
   const [editingDog, setEditingDog] = useState<Dog | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   if (mode === 'register') {
     return (
@@ -319,8 +331,13 @@ export default function DogProfile({
   const handleDelete = async (dog: Dog) => {
     const confirmed = window.confirm(`${dog.name}의 프로필과 모든 기록을 삭제할까요?`);
     if (!confirmed) return;
-    await supabase.from('dogs').delete().eq('id', dog.id);
-    await onChanged();
+    setDeletingId(dog.id);
+    try {
+      await supabase.from('dogs').delete().eq('id', dog.id);
+      await onChanged();
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -355,6 +372,7 @@ export default function DogProfile({
               <Button
                 color="light"
                 display="full"
+                disabled={deletingId === dog.id}
                 onClick={(e) => {
                   e.stopPropagation();
                   setEditingDog(dog);
@@ -368,12 +386,13 @@ export default function DogProfile({
                 color="danger"
                 variant="weak"
                 display="full"
+                disabled={deletingId === dog.id}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete(dog);
                 }}
               >
-                삭제
+                {deletingId === dog.id ? '삭제 중...' : '삭제'}
               </Button>
             </div>
           </div>

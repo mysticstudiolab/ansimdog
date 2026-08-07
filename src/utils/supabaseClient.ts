@@ -12,6 +12,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     autoRefreshToken: true,
   },
+  db: {
+    // 무료 플랜 프로젝트 1개를 여러 미니앱이 공유하므로, 테이블은 public이 아닌
+    // 전용 스키마(ansimdog)에 둔다. supabase/schema.sql 및 대시보드의
+    // Exposed schemas 설정과 반드시 함께 맞춰야 한다.
+    schema: 'ansimdog',
+  },
 });
 
 /**
@@ -28,6 +34,11 @@ export async function ensureAnonymousSession(): Promise<string> {
   const { data, error } = await supabase.auth.signInAnonymously();
 
   if (error || !data.user) {
+    if (error?.message?.includes('Anonymous sign-ins are disabled')) {
+      throw new Error(
+        'Supabase 프로젝트에 익명 로그인이 활성화되지 않았습니다. Supabase 대시보드 > Authentication > Providers > Anonymous를 Enabled(활성화)로 변경해주세요.'
+      );
+    }
     throw new Error(error?.message ?? '익명 로그인에 실패했습니다.');
   }
 

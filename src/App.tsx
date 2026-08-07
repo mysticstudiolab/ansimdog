@@ -34,13 +34,19 @@ export default function App() {
       .order('created_at', { ascending: true });
 
     if (fetchError) {
-      setError('반려견 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.');
+      console.error('[Supabase loadDogs Error]:', fetchError);
+      setError(`반려견 정보를 불러오지 못했어요. (${fetchError.message || 'Supabase 설정 확인 필요'})`);
       return [] as Dog[];
     }
 
     const list = (data ?? []) as Dog[];
     setDogs(list);
-    setSelectedDogId((prev) => prev ?? list[0]?.id ?? null);
+    setSelectedDogId((prev) => {
+      if (prev && list.some((d) => d.id === prev)) {
+        return prev;
+      }
+      return list[0]?.id ?? null;
+    });
     return list;
   }, []);
 
@@ -80,9 +86,10 @@ export default function App() {
   if (error && dogs.length === 0) {
     return (
       <div className="app-shell">
-        <div className="loading-screen" style={{ flexDirection: 'column', gap: 12 }}>
-          <span>{error}</span>
-          <button className="btn btn-secondary" onClick={() => window.location.reload()}>
+        <div className="loading-screen" style={{ flexDirection: 'column', gap: 16, padding: 24, textAlign: 'center' }}>
+          <div style={{ fontSize: 40 }}>⚠️</div>
+          <span style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--color-text)' }}>{error}</span>
+          <button className="btn btn-secondary" onClick={() => window.location.reload()} style={{ marginTop: 8 }}>
             다시 시도
           </button>
         </div>

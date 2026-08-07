@@ -171,20 +171,28 @@ export default function Calendar({ dog }: CalendarProps) {
                   <p style={{ margin: 0, fontSize: 14 }}>{selectedLog.memo}</p>
                 </div>
               )}
-              {selectedKey <= todayKey && (
+              {selectedKey <= todayKey ? (
                 <Button color="light" display="full" onClick={() => setEditingKey(selectedKey)} style={{ marginTop: 4 }}>
                   수정하기
                 </Button>
+              ) : (
+                <p style={{ fontSize: 13, color: 'var(--color-text-sub)', marginTop: 8, textAlign: 'center' }}>
+                  미래 날짜에는 미리 기록할 수 없어요.
+                </p>
               )}
             </div>
           ) : (
             <div className="empty-state">
               <div className="emoji">📭</div>
               <p>이 날은 기록이 없어요.</p>
-              {selectedKey <= todayKey && (
+              {selectedKey <= todayKey ? (
                 <Button color="primary" onClick={() => setEditingKey(selectedKey)} style={{ marginTop: 12 }}>
                   기록 추가하기
                 </Button>
+              ) : (
+                <p style={{ fontSize: 13, color: 'var(--color-text-sub)', marginTop: 8, textAlign: 'center' }}>
+                  미래 날짜에는 미리 기록을 등록할 수 없어요. 해당 날짜가 되면 남겨보세요 🐾
+                </p>
               )}
             </div>
           )}

@@ -8,6 +8,7 @@ import {
   isSameDay,
   isSameMonth,
   isToday as isTodayFns,
+  parseISO,
   startOfMonth,
   startOfWeek,
   subDays,
@@ -21,7 +22,7 @@ export function toDateKey(date: Date): string {
 }
 
 export function fromDateKey(dateKey: string): Date {
-  return new Date(`${dateKey}T00:00:00`);
+  return parseISO(dateKey);
 }
 
 export function formatKoreanDate(date: Date): string {

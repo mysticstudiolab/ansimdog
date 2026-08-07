@@ -56,6 +56,7 @@ export default function Schedule({ dog }: ScheduleProps) {
     memo: '',
   });
   const [saving, setSaving] = useState(false);
+  const [actionId, setActionId] = useState<string | null>(null);
 
   const load = async () => {
     setLoading(true);
@@ -93,24 +94,36 @@ export default function Schedule({ dog }: ScheduleProps) {
   };
 
   const handleComplete = async (item: ScheduleType) => {
-    await supabase.from('schedules').update({ is_completed: true }).eq('id', item.id);
+    if (actionId) return;
+    setActionId(item.id);
+    try {
+      await supabase.from('schedules').update({ is_completed: true }).eq('id', item.id);
 
-    if (item.repeat_days) {
-      await supabase.from('schedules').insert({
-        dog_id: dog.id,
-        category: item.category,
-        title: item.title,
-        scheduled_date: addDaysToKey(item.scheduled_date, item.repeat_days),
-        repeat_days: item.repeat_days,
-        memo: item.memo,
-      });
+      if (item.repeat_days) {
+        await supabase.from('schedules').insert({
+          dog_id: dog.id,
+          category: item.category,
+          title: item.title,
+          scheduled_date: addDaysToKey(item.scheduled_date, item.repeat_days),
+          repeat_days: item.repeat_days,
+          memo: item.memo,
+        });
+      }
+      await load();
+    } finally {
+      setActionId(null);
     }
-    await load();
   };
 
   const handleDelete = async (item: ScheduleType) => {
-    await supabase.from('schedules').delete().eq('id', item.id);
-    await load();
+    if (actionId) return;
+    setActionId(item.id);
+    try {
+      await supabase.from('schedules').delete().eq('id', item.id);
+      await load();
+    } finally {
+      setActionId(null);
+    }
   };
 
   const upcoming = schedules.filter((s) => !s.is_completed);
@@ -145,6 +158,7 @@ export default function Schedule({ dog }: ScheduleProps) {
           {upcoming.map((item) => {
             const meta = categoryMeta(item.category);
             const overdue = daysUntil(item.scheduled_date) < 0;
+            const isProcessing = actionId === item.id;
             return (
               <div key={item.id} className="card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -164,12 +178,24 @@ export default function Schedule({ dog }: ScheduleProps) {
                 </div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                   <div style={{ flex: 1 }}>
-                    <Button color="primary" variant="weak" display="full" onClick={() => handleComplete(item)}>
-                      완료 처리
+                    <Button
+                      color="primary"
+                      variant="weak"
+                      display="full"
+                      disabled={isProcessing || actionId !== null}
+                      onClick={() => handleComplete(item)}
+                    >
+                      {isProcessing ? '처리 중...' : '완료 처리'}
                     </Button>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <Button color="danger" variant="weak" display="full" onClick={() => handleDelete(item)}>
+                    <Button
+                      color="danger"
+                      variant="weak"
+                      display="full"
+                      disabled={isProcessing || actionId !== null}
+                      onClick={() => handleDelete(item)}
+                    >
                       삭제
                     </Button>
                   </div>

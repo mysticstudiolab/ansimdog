@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { generateHapticFeedback } from '@apps-in-toss/web-framework';
 import { Button, Chip, ChipItem, TextArea } from '@toss/tds-mobile';
 import { supabase } from '../utils/supabaseClient';
@@ -9,10 +9,23 @@ function tap() {
   generateHapticFeedback({ type: 'tickWeak' }).catch(() => {});
 }
 
-function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
+function ToggleSwitch({
+  checked,
+  onChange,
+  ariaLabel,
+}: {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  ariaLabel?: string;
+}) {
   return (
     <label className="toggle-switch">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <input
+        type="checkbox"
+        checked={checked}
+        aria-label={ariaLabel}
+        onChange={(e) => onChange(e.target.checked)}
+      />
       <span className="track" />
       <span className="thumb" />
     </label>
@@ -63,6 +76,17 @@ interface DailyLogEditorProps {
 export default function DailyLogEditor({ dog, dateKey, initialLog, onSavingChange, onSaved }: DailyLogEditorProps) {
   const [log, setLog] = useState<DailyLogInput>(() => initialLog ?? emptyLog(dog.id, dateKey));
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (saveTimer.current) {
+        clearTimeout(saveTimer.current);
+      }
+    };
+  }, []);
 
   const persist = (next: DailyLogInput) => {
     setLog(next);
@@ -74,8 +98,10 @@ export default function DailyLogEditor({ dog, dateKey, initialLog, onSavingChang
         .upsert(next, { onConflict: 'dog_id,log_date' })
         .select()
         .single();
-      onSavingChange?.(false);
-      if (data) onSaved?.(data as DailyLog);
+      if (isMountedRef.current) {
+        onSavingChange?.(false);
+        if (data) onSaved?.(data as DailyLog);
+      }
     }, 500);
   };
 
@@ -131,6 +157,7 @@ export default function DailyLogEditor({ dog, dateKey, initialLog, onSavingChang
         <div className="list-row" style={{ border: 'none', padding: '4px 0' }}>
           <span>{log.walked ? '산책 완료' : '아직 산책 전이에요'}</span>
           <ToggleSwitch
+            ariaLabel="산책 완료 여부 토글"
             checked={log.walked}
             onChange={(checked) =>
               update({ walked: checked, walk_minutes: checked ? log.walk_minutes || 20 : 0 })
@@ -209,7 +236,11 @@ export default function DailyLogEditor({ dog, dateKey, initialLog, onSavingChang
         )}
         <div className="list-row" style={{ border: 'none', padding: '4px 0' }}>
           <span>{log.medicine_taken ? '투약했어요' : '투약 기록이 없어요'}</span>
-          <ToggleSwitch checked={log.medicine_taken} onChange={(checked) => update({ medicine_taken: checked })} />
+          <ToggleSwitch
+            ariaLabel="약 복용 여부 토글"
+            checked={log.medicine_taken}
+            onChange={(checked) => update({ medicine_taken: checked })}
+          />
         </div>
       </div>
 
