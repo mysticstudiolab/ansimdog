@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="ko" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>안심하개 - 반려견 건강관리</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#003dab",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-secondary-fixed-variant": "#00468a",
+                        "outline": "#737686",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#41474f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "inverse-primary": "#b5c4ff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1a56db",
+                        "surface-container-high": "#dee9fc",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface": "#f8f9ff",
+                        "outline-variant": "#c3c5d7",
+                        "on-background": "#121c2a",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#444a52",
+                        "on-secondary-container": "#004384",
+                        "secondary-fixed-dim": "#a8c8ff",
+                        "tertiary-fixed": "#dee3ed",
+                        "surface-container-low": "#eff4ff",
+                        "surface-tint": "#1353d8",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#121c2a",
+                        "inverse-surface": "#27313f",
+                        "primary": "#003fb1",
+                        "on-tertiary-container": "#d9dee7",
+                        "on-primary-fixed": "#00174d",
+                        "on-surface-variant": "#434654",
+                        "surface-dim": "#d0dbed",
+                        "background": "#f8f9ff",
+                        "on-secondary-fixed": "#001b3c",
+                        "on-primary-container": "#d4dcff",
+                        "tertiary-fixed-dim": "#c1c7d0",
+                        "surface-container": "#e6eeff",
+                        "tertiary-container": "#5c626a",
+                        "on-tertiary-fixed": "#161c23",
+                        "secondary-container": "#82b2fe",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#d9e3f6",
+                        "secondary": "#285ea5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "12px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "md": "24px",
+                        "base": "8px",
+                        "margin-desktop": "32px",
+                        "container-margin": "16px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim z-50">
+<div class="flex justify-between items-center px-container-margin py-sm w-full">
+<div class="flex items-center gap-2">
+<img alt="안심하개 로고" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFDEJTYqwrMnBeBCSU-Trw9lh0rHjnRoWbJndibSYCURe1ndWXbHHwhBIc45ml1oSSqTn-CBuCcDPznOnwzktYwaPPNRR1aa6-71ytNaUcK8REAioAF-UahfRHy_lgjsHj-T0W7TIMyg_9AH2wZm37Xwo1eaXO4zgEbid-LYZArpnU0BHf4HMkBX95RMvpwoG0TFgF7vPW-0Qa43V__v3mbclN5SFWmWOwWbWJuv_0yDJEQUt6gpBxPRFBDqoqNAM3vA">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">안심하개</h1>
+</div>
+<button class="hover:opacity-80 active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">notifications</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pb-24 max-w-7xl mx-auto w-full px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<section class="py-lg flex flex-col items-center text-center gap-md">
+<div class="inline-flex items-center justify-center bg-primary-fixed text-on-primary-fixed px-4 py-1 rounded-full font-label-md text-label-md mb-2">
+<span class="material-symbols-outlined text-[16px] mr-1">favorite</span>
+                건강한 일상의 시작
+            </div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
+                평소와 다른 작은 변화,<br>
+<span class="text-primary">안심하개</span>가 먼저 발견합니다.
+            </h2>
+<div class="w-full h-64 md:h-96 mt-6 rounded-xl overflow-hidden shadow-lg relative">
+<img class="w-full h-full object-cover" data-alt="A heart-warming, brightly lit photo of a caring pet owner looking affectionately at their calm, happy golden retriever in a modern, clean living room setting. The lighting is soft and natural, emphasizing a sense of professional reliability and gentle guardianship. The color palette leans towards warm neutrals and soft blues, creating a peaceful, dependable atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3o30MHdRw6yHguzFA90gRhKv9lmiT_9t4YQfRS9IDJByg2JuE6SNVMZfMPJt0JaKR3cx180d9wWRxBHNVMcEoII0O8NELiAL73Esl-whSHpOPQZ9tExp5AlYzdudCYylh2nLD923eooY2uCCLv5I3qtQ46eEFlgsM3o5lqZerxN2I92MMwEUjfHB9o95FLIGQUv8Xry9oWS3G21TZejylhykd81PPy8D0wDPAtXtAioW4SZ8PjgnJMkJoF-hT98jkxJPzmC3TUo_Oxg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end p-4">
+<p class="text-white font-body-md text-body-md">매일의 기록이 모여 만드는 든든한 안심</p>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="py-lg bg-surface-container-low rounded-xl px-4 md:px-8 text-center my-md shadow-[0_4px_24px_rgba(26,86,219,0.05)] border border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">매일 함께하는 만큼, 우리 아이를 더 잘 알고 싶으니까</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+                바쁜 일상 속에서 기록은 번거롭고, 우리 아이의 작은 변화를 객관적으로 판단하기란 쉽지 않습니다. 기억에만 의존하는 건강 관리는 이제 그만.
+            </p>
+<div class="flex justify-center mt-6 gap-4 opacity-70">
+<span class="material-symbols-outlined text-[40px] text-tertiary">edit_calendar</span>
+<span class="material-symbols-outlined text-[40px] text-tertiary">help_center</span>
+<span class="material-symbols-outlined text-[40px] text-tertiary">warning</span>
+</div>
+</section>
+<!-- Solution Section -->
+<section class="py-lg flex flex-col items-center text-center">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">매일 10초의 기록이 데이터가 되고, 데이터는 안심이 됩니다.</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                간편한 기록부터 스마트한 패턴 분석까지, 안심하개가 함께합니다.
+            </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+<!-- Feature 1: Record -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/20 flex flex-col items-center text-center transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px]">touch_app</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2 text-lg">원터치 건강 기록</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">식사, 산책, 배변, 약 복용을 탭 한 번으로 쉽고 빠르게 기록하세요.</p>
+<div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/10">
+<img alt="원터치 기록 화면" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPZ5Jgc3LzlaEtl2HQTslm7tDBf1hyGWOTJ4yS77ZaM9ClvqO8C9QAAa0DrXMYv_GOeRg31shZpVeCu51b89YhqsxPP7OMopEzvCkEUqjQqTXMvMkh-3WSd0MJZ7UCgRgYp6NGkGlwgCWm-WaonrnfjtwMP4x5iAHhwj6__RSW3IWzBhvDBt7c10YrLz1Bo04Fv-Bylb-5Jjld1lXHap_ZN4VIZVrqSUg6rY8xtK-34MOXeVBmfN-5UemRwG-glGKMxA">
+</div>
+</div>
+<!-- Feature 2: Pattern -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/20 flex flex-col items-center text-center transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px]">timeline</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2 text-lg">평소 패턴 비교</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">"우리 아이는 보통 이 시간에 식사를 마쳐요." 데이터를 통해 일상을 이해합니다.</p>
+<div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/10">
+<img alt="패턴 비교 화면" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQu8DO7zndGWSjJs2t1SDtVuaWd57OVHjUFsjys8OUhwsBjz48UGe5qrtc58-ymjxFQYR7yYU_xfNYUi4JxlEIK9qSLMzj1ds86xnJqKhIFjuqh6PQd4bVDzX53BkvNIajcKWYBmz9lxfD4E9FDsY9XQQVWmtQt1OPfFBY5O5mur5s0ac_cG2_eT9Z70yNvmiZb1rjXtYideMZyksB4lwiGqinpCUpJLXwrPc0mw-4SJU1bOW5Wi0R7d17b5hlOcKhyw">
+</div>
+</div>
+<!-- Feature 3: AI Briefing -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/20 flex flex-col items-center text-center transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 bg-tertiary-container text-on-tertiary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px]">tips_and_updates</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2 text-lg">AI 건강 브리핑</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">"오늘은 평소보다 조금 더 세심한 보살핌이 필요해요." 알림으로 변화를 감지합니다.</p>
+<div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/10">
+<img alt="AI 브리핑 화면" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByBnQW9hBUt4hSxeneY7rQr_xE4DQBh6VTBhAYDE9EkBzvJUKjyHonZ5qa4GqtG30NKiwahHjoFdw9xd1AzEV9JVsHdIVPfUUmItnv4xZrrr92bXDDwkkwHUMbS20a6Rr6ZZQHqD5v5ND-Q47G0LQ6nPoLKlFGeVsTqyDFSA7ZJqZQHFDGgGvx7fK1jfE42CvdDWeYdUgFU-7kjbPLszyru6ejkMk9OirH87HhwQnpXdnuzo3kL9y8lACPLHSN5ukoaw">
+</div>
+</div>
+</div>
+</section>
+<!-- Emotion Touch -->
+<section class="py-lg my-md relative rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center text-center">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full z-0 opacity-80" data-alt="A beautiful, soft-focus portrait of a dog resting its head gently on its owner's lap. The scene is bathed in warm, reassuring morning sunlight filtering through a window, emphasizing a deep emotional bond, calm guardianship, and trust. The overall tone is comforting, professional, and emotionally resonant, using subtle blue and warm neutral hues." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBauOm24udwAjp1nuQRQX35RxS7sQCFHpj4o2eiHgmNoahLT9FrngoYKyKvbJP-9xvwONo9w1PM1vi_779vBTNMLx0NJJyzRhrBM4qxB7TrPEdUkJn2G8piiyGDWPifA-OItVetfyzH7RvKHv3N98K8xOKQEyodY04FKp98SoRm0mjU16iyY-4aNmcMyz8RUpvf7B31ZrCS46f4OxFA5yJvm4Gcf32i0OkmlrvRWZy0Fh7tfzzy976QWWALW6h4sGSdKjrvRuDPumY88w&quot;);"></div>
+<div class="absolute inset-0 bg-primary-fixed/80 z-10 mix-blend-multiply"></div>
+<div class="relative z-20 p-6 flex flex-col items-center gap-4">
+<span class="material-symbols-outlined text-white text-[48px] opacity-90">diversity_1</span>
+<h3 class="font-headline-md text-headline-md text-white font-bold">데이터 너머, 우리 아이를 더 깊이 이해하는 시간</h3>
+<p class="font-body-md text-body-md text-inverse-on-surface max-w-xl">
+                    건강 기록은 단순한 숫자가 아닙니다. 매일 아이와 눈을 맞추고 교감하는 든든한 보호의 시작입니다.
+                </p>
+</div>
+</section>
+<!-- Flow Summary -->
+<section class="py-lg bg-surface-container rounded-xl px-4 py-8 text-center border border-outline-variant/20 shadow-sm">
+<h4 class="font-label-md text-label-md text-on-surface-variant mb-6 uppercase tracking-wider">안심하개와 함께하는 4단계</h4>
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-3xl mx-auto">
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 bg-surface text-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">pets</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">등록</span>
+</div>
+<div class="hidden md:block h-[2px] w-16 bg-outline-variant/50"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 bg-surface text-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">기록</span>
+</div>
+<div class="hidden md:block h-[2px] w-16 bg-outline-variant/50"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 bg-surface text-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">분석</span>
+</div>
+<div class="hidden md:block h-[2px] w-16 bg-outline-variant/50"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">안심</span>
+</div>
+</div>
+</section>
+<!-- CTA -->
+<section class="py-xl flex justify-center">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-8 py-4 rounded-full shadow-lg hover:bg-on-primary-fixed-variant transition-colors flex items-center gap-2 transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+                우리 아이 건강 기록 시작하기
+            </button>
+</section>
+<div class="h-20"></div> <!-- Spacer for BottomNav -->
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full rounded-t-xl z-50 bg-surface-container-lowest dark:bg-surface-container-low shadow-[0_-4px_12px_rgba(139,94,60,0.05)] md:hidden">
+<div class="flex justify-around items-center h-20 px-4 pb-safe">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:opacity-80 active:scale-98 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">홈</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-full active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-sm text-label-sm mt-1">기록</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-full active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-sm text-label-sm mt-1">리포트</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-full active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm mt-1">설정</span>
+</a>
+</div>
+</nav>
+
+
+</body></html>

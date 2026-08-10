@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>반려견 등록 - 안심하개</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001b3c",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d6e3ff",
+                        "on-tertiary-fixed-variant": "#41474f",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#82b2fe",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-surface-variant": "#434654",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#121c2a",
+                        "on-primary-fixed": "#00174d",
+                        "surface-tint": "#1353d8",
+                        "secondary-fixed-dim": "#a8c8ff",
+                        "on-background": "#121c2a",
+                        "on-primary": "#ffffff",
+                        "secondary": "#285ea5",
+                        "outline-variant": "#c3c5d7",
+                        "surface-dim": "#d0dbed",
+                        "inverse-primary": "#b5c4ff",
+                        "surface-variant": "#d9e3f6",
+                        "on-secondary-fixed-variant": "#00468a",
+                        "outline": "#737686",
+                        "inverse-surface": "#27313f",
+                        "on-primary-container": "#d4dcff",
+                        "on-tertiary-fixed": "#161c23",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#e6eeff",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "primary-container": "#1a56db",
+                        "surface-container-highest": "#d9e3f6",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed-dim": "#c1c7d0",
+                        "tertiary": "#444a52",
+                        "tertiary-fixed": "#dee3ed",
+                        "surface-container-high": "#dee9fc",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary-container": "#d9dee7",
+                        "primary": "#003fb1",
+                        "tertiary-container": "#5c626a",
+                        "on-secondary-container": "#004384",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "md": "24px",
+                        "margin-desktop": "32px",
+                        "xl": "80px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased">
+<!-- Top App Bar (Modified for focused task: back button instead of profile/notifications) -->
+<header class="w-full top-0 sticky bg-surface flex justify-between items-center px-margin-mobile md:px-margin-desktop py-sm z-40">
+<button class="text-on-surface p-2 rounded-full hover:bg-surface-variant transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-primary">안심하개</div>
+<div class="w-10"></div> <!-- Placeholder for balance -->
+</header>
+<main class="flex-grow w-full max-w-[600px] mx-auto px-margin-mobile md:px-margin-desktop py-lg pb-xl">
+<!-- Header Section -->
+<div class="mb-lg text-center">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-base">우리 아이 등록</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">우리 아이의 기본 정보를 입력해주세요.</p>
+</div>
+<!-- Image Upload (Bento Style) -->
+<div class="mb-lg flex justify-center">
+<div class="relative w-32 h-32 rounded-full bg-surface-container-high border-2 border-dashed border-outline-variant flex flex-col items-center justify-center cursor-pointer hover:bg-surface-variant transition-colors group overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center hidden" data-alt="A high-quality, professional photograph of a cute, fluffy golden retriever puppy sitting attentively on a clean, light-colored wooden floor. The lighting is soft, natural, and bright, creating a welcoming and warm light-mode aesthetic. The background is slightly blurred to keep the focus entirely on the puppy, evoking a sense of trust and care typical of a premium pet service." id="preview-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6KTaiFn-4xDzaspUuBoAgYVz358vAh_giiOFxVkhZ0-98VJYY2TP-bcjRXooLkrQhRFjz4Rt3wnQ8CuNbBi-yge7EC7fx2pHT6kAekR9wcwiBEIFu3EFS---SVFOvUfuSpR8T6wBoyD6YJoiMOtklzforMnwdwFZ2zLMKNif4fRI2p1ERn9soL3Foaa-X5vD4skwS9lzhjo20XqTI5cFH7Ou59ZdH0eP1YDHhlrVIZzBiQr8o_RgI')"></div>
+<span class="material-symbols-outlined text-outline text-4xl mb-2 group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 0;">add_a_photo</span>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">사진 추가</span>
+<input accept="image/*" aria-label="프로필 사진 업로드" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" type="file"/>
+</div>
+</div>
+<!-- Form Fields -->
+<form class="space-y-md">
+<!-- Name Field -->
+<div class="bg-surface-container-lowest p-sm rounded-xl shadow-[0_4px_12px_rgba(26,86,219,0.04)] border border-surface-variant">
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-xs" for="pet-name">이름</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">pets</span>
+</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-sm pl-[40px] pr-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="pet-name" placeholder="예: 멍멍이" type="text"/>
+</div>
+</div>
+<!-- Breed Field -->
+<div class="bg-surface-container-lowest p-sm rounded-xl shadow-[0_4px_12px_rgba(26,86,219,0.04)] border border-surface-variant">
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-xs" for="pet-breed">품종</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">category</span>
+</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-sm pl-[40px] pr-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="pet-breed" placeholder="예: 골든 리트리버" type="text"/>
+</div>
+</div>
+<!-- Age & Weight Grid (Asymmetric layout) -->
+<div class="grid grid-cols-2 gap-md">
+<!-- Age Field -->
+<div class="bg-surface-container-lowest p-sm rounded-xl shadow-[0_4px_12px_rgba(26,86,219,0.04)] border border-surface-variant">
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-xs" for="pet-age">나이 (년)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">calendar_month</span>
+</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-sm pl-[40px] pr-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="pet-age" min="0" placeholder="예: 3" type="number"/>
+</div>
+</div>
+<!-- Weight Field -->
+<div class="bg-surface-container-lowest p-sm rounded-xl shadow-[0_4px_12px_rgba(26,86,219,0.04)] border border-surface-variant">
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-xs" for="pet-weight">체중 (kg)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">scale</span>
+</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-sm pl-[40px] pr-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="pet-weight" min="0" placeholder="예: 5.5" step="0.1" type="number"/>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="pt-lg">
+<button class="w-full bg-primary hover:opacity-90 text-on-primary font-headline-md text-headline-md rounded-xl py-[16px] shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-sm" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    등록 완료
+                </button>
+</div>
+</form>
+</main>
+<!-- Suppressed Bottom Nav & FAB: This is a linear/transactional form screen, hiding navigation elements as per guidelines. -->
+</body></html>
