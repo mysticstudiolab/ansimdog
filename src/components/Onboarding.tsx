@@ -1,69 +1,60 @@
 import { useState } from 'react';
-import { Button } from '@toss/tds-mobile';
+import type { Dog, NewDog } from '../types';
+import { supabase } from '../utils/supabaseClient';
+import PetForm from './PetForm';
+import { PawIcon } from './icons';
 
-interface OnboardingProps {
-  onDone: () => void;
-}
+export default function Onboarding({ onRegistered }: { onRegistered: (dog: Dog) => void }) {
+  const [step, setStep] = useState<'intro' | 'register'>('intro');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-const STEPS = [
-  {
-    emoji: '🐶',
-    title: '오늘도 우리 아이,\n안심하고 있나요?',
-    desc: '안심하개는 반려견 보호자가 매일의 돌봄을 간편하게 기록하고 관리할 수 있는 케어 다이어리예요.',
-  },
-  {
-    emoji: '🍚',
-    title: '식사, 물, 산책, 배변,\n약 복용까지 한 번에',
-    desc: '매일 10초면 충분해요. 버튼 몇 번만 눌러 오늘 하루 돌봄 기록을 남길 수 있어요.',
-  },
-  {
-    emoji: '📊',
-    title: '주간 요약으로\n변화를 한눈에',
-    desc: '비교 그래프와 히트맵으로 우리 아이의 컨디션 변화를 놓치지 않고 확인해요.',
-  },
-  {
-    emoji: '🗓️',
-    title: '예방접종, 약 구매도\n미리 챙겨드릴게요',
-    desc: '반복 일정을 등록해두면 놓치기 쉬운 돌봄 일정을 알림으로 챙길 수 있어요.',
-  },
-];
+  const handleSubmit = async (input: NewDog) => {
+    setSubmitting(true);
+    setError(null);
+    const { data, error: insertError } = await supabase.from('dogs').insert(input).select('*').single();
+    setSubmitting(false);
+    if (insertError || !data) {
+      setError(insertError?.message ?? '반려견 등록에 실패했어요.');
+      return;
+    }
+    onRegistered(data as Dog);
+  };
 
-export default function Onboarding({ onDone }: OnboardingProps) {
-  const [step, setStep] = useState(0);
-  const isLast = step === STEPS.length - 1;
-  const current = STEPS[step];
+  if (step === 'intro') {
+    return (
+      <div className="app-shell">
+        <div className="app-main" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '100vh', paddingBottom: 40 }}>
+          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+            <div style={{ color: 'var(--color-primary)', marginBottom: 18, display: 'flex', justifyContent: 'center' }}>
+              <PawIcon size={56} />
+            </div>
+            <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 10 }}>안심하개에 오신 걸 환영해요</h1>
+            <p style={{ fontSize: 14.5, color: 'var(--color-text-sub)', lineHeight: 1.7 }}>
+              매일 조금씩 기록하면,
+              <br />
+              평소와 다른 변화를 먼저 알아챌 수 있어요.
+              <br />
+              먼저 우리 아이를 등록해볼까요?
+            </p>
+          </div>
+          <button type="button" className="btn btn-primary" onClick={() => setStep('register')}>
+            반려견 등록하기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="onboarding-screen">
-      <div className="onboarding-emoji">{current.emoji}</div>
-      <h1 className="onboarding-title" style={{ whiteSpace: 'pre-line' }}>
-        {current.title}
-      </h1>
-      <p className="onboarding-desc" style={{ whiteSpace: 'pre-line' }}>
-        {current.desc}
-      </p>
-
-      <div className="progress-dots">
-        {STEPS.map((s, i) => (
-          <span key={s.title} className={`dot ${i === step ? 'active' : ''}`} />
-        ))}
-      </div>
-
-      <div className="onboarding-footer">
-        {step > 0 && (
-          <Button color="light" onClick={() => setStep((s) => s - 1)}>
-            이전
-          </Button>
-        )}
-        <div style={{ flex: 1 }}>
-          <Button
-            color="primary"
-            display="full"
-            onClick={() => (isLast ? onDone() : setStep((s) => s + 1))}
-          >
-            {isLast ? '시작하기' : '다음'}
-          </Button>
-        </div>
+    <div className="app-shell">
+      <div className="app-main" style={{ paddingTop: 28 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 800, marginBottom: 4 }}>반려견 정보를 알려주세요</h1>
+        <p style={{ fontSize: 13.5, color: 'var(--color-text-sub)', marginBottom: 22 }}>
+          이름만 입력해도 바로 시작할 수 있어요. 나머지는 나중에 프로필에서 수정할 수 있어요.
+        </p>
+        {error && <div className="error-banner">{error}</div>}
+        <PetForm submitLabel="시작하기" onSubmit={handleSubmit} submitting={submitting} />
       </div>
     </div>
   );

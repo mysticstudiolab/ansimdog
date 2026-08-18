@@ -1,27 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
-import { supabase, ensureAnonymousSession } from './utils/supabaseClient';
+import { useCallback, useEffect, useState } from 'react';
+import { ensureAnonymousSession, supabase } from './utils/supabaseClient';
 import type { Dog, ScreenName } from './types';
+import BottomNav from './components/BottomNav';
 import Onboarding from './components/Onboarding';
-import DogProfile from './components/DogProfile';
 import Home from './components/Home';
-import WeeklySummary from './components/WeeklySummary';
-import Calendar from './components/Calendar';
-import Schedule from './components/Schedule';
-import { CalendarIcon, HomeIcon, ProfileIcon, ScheduleIcon, WeeklyIcon } from './components/icons';
-
-const ONBOARDED_KEY = 'ansimdog_onboarded_v1';
-
-const NAV_ITEMS: { key: ScreenName; label: string; Icon: (props: { size?: number }) => JSX.Element }[] = [
-  { key: 'home', label: '오늘', Icon: HomeIcon },
-  { key: 'weekly', label: '주간요약', Icon: WeeklyIcon },
-  { key: 'calendar', label: '캘린더', Icon: CalendarIcon },
-  { key: 'schedule', label: '일정', Icon: ScheduleIcon },
-  { key: 'profile', label: '프로필', Icon: ProfileIcon },
-];
+import HealthRecords from './components/HealthRecords';
+import HealthAnalysis from './components/HealthAnalysis';
+import Management from './components/Management';
+import Profile from './components/Profile';
+import { SecondaryButton } from './components/ui';
 
 export default function App() {
   const [booting, setBooting] = useState(true);
-  const [hasOnboarded, setHasOnboarded] = useState(false);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [selectedDogId, setSelectedDogId] = useState<string | null>(null);
   const [screen, setScreen] = useState<ScreenName>('home');
@@ -39,12 +29,11 @@ export default function App() {
       return [] as Dog[];
     }
 
+    setError(null);
     const list = (data ?? []) as Dog[];
     setDogs(list);
     setSelectedDogId((prev) => {
-      if (prev && list.some((d) => d.id === prev)) {
-        return prev;
-      }
+      if (prev && list.some((d) => d.id === prev)) return prev;
       return list[0]?.id ?? null;
     });
     return list;
@@ -54,7 +43,6 @@ export default function App() {
     (async () => {
       try {
         await ensureAnonymousSession();
-        setHasOnboarded(localStorage.getItem(ONBOARDED_KEY) === 'true');
         await loadDogs();
       } catch (e) {
         setError(e instanceof Error ? e.message : '초기화 중 문제가 발생했어요.');
@@ -63,11 +51,6 @@ export default function App() {
       }
     })();
   }, [loadDogs]);
-
-  const handleOnboardingDone = () => {
-    localStorage.setItem(ONBOARDED_KEY, 'true');
-    setHasOnboarded(true);
-  };
 
   const handleDogRegistered = async (dog: Dog) => {
     await loadDogs();
@@ -86,29 +69,22 @@ export default function App() {
   if (error && dogs.length === 0) {
     return (
       <div className="app-shell">
-        <div className="loading-screen" style={{ flexDirection: 'column', gap: 16, padding: 24, textAlign: 'center' }}>
+        <div
+          className="loading-screen"
+          style={{ flexDirection: 'column', gap: 16, padding: 24, textAlign: 'center' }}
+        >
           <div style={{ fontSize: 40 }}>⚠️</div>
           <span style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--color-text)' }}>{error}</span>
-          <button className="btn btn-secondary" onClick={() => window.location.reload()} style={{ marginTop: 8 }}>
+          <SecondaryButton onClick={() => window.location.reload()} full={false}>
             다시 시도
-          </button>
+          </SecondaryButton>
         </div>
       </div>
     );
-  }
-
-  if (!hasOnboarded && dogs.length === 0) {
-    return <Onboarding onDone={handleOnboardingDone} />;
   }
 
   if (dogs.length === 0) {
-    return (
-      <div className="app-shell">
-        <div className="app-main" style={{ paddingTop: 12 }}>
-          <DogProfile mode="register" dogs={dogs} onRegistered={handleDogRegistered} onChanged={loadDogs} />
-        </div>
-      </div>
-    );
+    return <Onboarding onRegistered={handleDogRegistered} />;
   }
 
   const selectedDog = dogs.find((d) => d.id === selectedDogId) ?? dogs[0];
@@ -116,36 +92,17 @@ export default function App() {
   return (
     <div className="app-shell">
       <div className="app-main">
-        {screen === 'home' && <Home dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} />}
-        {screen === 'weekly' && <WeeklySummary dog={selectedDog} />}
-        {screen === 'calendar' && <Calendar dog={selectedDog} />}
-        {screen === 'schedule' && <Schedule dog={selectedDog} />}
+        {screen === 'home' && (
+          <Home dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} onGoAnalysis={() => setScreen('analysis')} />
+        )}
+        {screen === 'records' && <HealthRecords dog={selectedDog} />}
+        {screen === 'analysis' && <HealthAnalysis dog={selectedDog} />}
+        {screen === 'management' && <Management dog={selectedDog} />}
         {screen === 'profile' && (
-          <DogProfile
-            mode="manage"
-            dogs={dogs}
-            selectedDogId={selectedDog.id}
-            onSelectDog={setSelectedDogId}
-            onRegistered={handleDogRegistered}
-            onChanged={loadDogs}
-          />
+          <Profile dogs={dogs} selectedDogId={selectedDog.id} onSelectDog={setSelectedDogId} onChanged={loadDogs} />
         )}
       </div>
-
-      <nav className="bottom-nav">
-        {NAV_ITEMS.map((item) => (
-          <button
-            key={item.key}
-            className={`nav-item ${screen === item.key ? 'active' : ''}`}
-            onClick={() => setScreen(item.key)}
-          >
-            <span className="nav-icon">
-              <item.Icon />
-            </span>
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
+      <BottomNav screen={screen} onChange={setScreen} />
     </div>
   );
 }

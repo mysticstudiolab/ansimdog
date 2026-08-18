@@ -1,280 +1,262 @@
-type IconProps = { size?: number };
+type IconProps = { size?: number; className?: string };
 
-export function MealIcon({ size = 26 }: IconProps) {
+const base = (size: number) => ({
+  width: size,
+  height: size,
+  viewBox: '0 0 24 24',
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: 1.8,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+});
+
+export function HomeIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="mealBowl" x1="6" y1="12" x2="26" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <path d="M6 15c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v4c0 5.2-4.5 9.4-10 9.4S6 24.2 6 19z" fill="url(#mealBowl)" />
-      <ellipse cx="16" cy="15" rx="10" ry="2.6" fill="#1b64da" />
-      <ellipse cx="12.4" cy="14.2" rx="2.6" ry="1.4" fill="#ffffff" opacity="0.4" />
-      <g fill="#eaf2ff" opacity="0.92">
-        <ellipse cx="16" cy="22.4" rx="2.5" ry="2" />
-        <circle cx="13" cy="19.6" r="1.15" />
-        <circle cx="16" cy="18.6" r="1.2" />
-        <circle cx="19" cy="19.6" r="1.15" />
-      </g>
-      <circle cx="11" cy="10.4" r="1.5" fill="#ffb066" />
-      <circle cx="15.2" cy="9" r="1.7" fill="#ff9f43" />
-      <circle cx="19" cy="10.6" r="1.4" fill="#ffb066" />
+    <svg {...base(size)} className={className}>
+      <path d="M4 11.5 12 4l8 7.5" />
+      <path d="M6 10v9a1 1 0 0 0 1 1h3v-5.5h4V20h3a1 1 0 0 0 1-1v-9" />
     </svg>
   );
 }
 
-export function WaterIcon({ size = 26 }: IconProps) {
+export function RecordsIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="waterDrop" x1="9" y1="4" x2="24" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M16 3c-4.2 6-8.2 11-8.2 16a8.2 8.2 0 0 0 16.4 0C24.2 14 20.2 9 16 3z"
-        fill="url(#waterDrop)"
-      />
-      <ellipse cx="12.8" cy="18.6" rx="1.9" ry="2.8" fill="#ffffff" opacity="0.45" />
+    <svg {...base(size)} className={className}>
+      <rect x="5" y="4" width="14" height="17" rx="2" />
+      <path d="M9 3.5h6a1 1 0 0 1 1 1V6H8V4.5a1 1 0 0 1 1-1Z" />
+      <path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" />
     </svg>
   );
 }
 
-export function WalkIcon({ size = 26 }: IconProps) {
+export function AnalysisIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="pawGrad" x1="6" y1="8" x2="26" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <ellipse cx="16" cy="21.5" rx="7.2" ry="6" fill="url(#pawGrad)" />
-      <circle cx="7.4" cy="13.4" r="3" fill="url(#pawGrad)" />
-      <circle cx="13" cy="8.6" r="3.15" fill="url(#pawGrad)" />
-      <circle cx="19" cy="8.6" r="3.15" fill="url(#pawGrad)" />
-      <circle cx="24.6" cy="13.4" r="3" fill="url(#pawGrad)" />
-      <ellipse cx="13.4" cy="19.2" rx="2" ry="1.4" fill="#ffffff" opacity="0.3" />
+    <svg {...base(size)} className={className}>
+      <path d="M4 20V10M10 20V4M16 20v-7M20.5 20H3.5" />
     </svg>
   );
 }
 
-export function PoopIcon({ size = 26 }: IconProps) {
+export function ManagementIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="poopSwirl" x1="8" y1="4" x2="24" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#e8c49a" />
-          <stop offset="1" stopColor="#c98b4a" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M16 4c-1.2 0-2.1.94-2.1 2.1 0 .6.24 1.14.63 1.53-2.16.6-3.76 2.66-3.76 5.1 0 .74.14 1.44.4 2.06-2.6.7-4.47 3.14-4.47 6 0 3.42 3.2 6.21 7.16 6.21h4.28c3.95 0 7.16-2.79 7.16-6.21 0-2.86-1.87-5.3-4.47-6 .26-.62.4-1.32.4-2.06 0-2.44-1.6-4.5-3.76-5.1.39-.39.63-.93.63-1.53C18.1 4.94 17.2 4 16 4z"
-        fill="url(#poopSwirl)"
-      />
-      <ellipse cx="12.6" cy="10.4" rx="1.6" ry="1" fill="#ffffff" opacity="0.35" />
-      <circle cx="12.9" cy="20.2" r="1.25" fill="#5a4632" />
-      <circle cx="19.1" cy="20.2" r="1.25" fill="#5a4632" />
-      <path d="M13.3 23.2c1 1 1.9 1 2.9 0" stroke="#5a4632" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+    <svg {...base(size)} className={className}>
+      <rect x="4" y="5" width="16" height="15" rx="2" />
+      <path d="M4 9.5h16M8 3v3M16 3v3" />
+      <path d="M8.5 13.5h.01M12 13.5h.01M15.5 13.5h.01M8.5 17h.01M12 17h.01" />
     </svg>
   );
 }
 
-export function MedicineIcon({ size = 26 }: IconProps) {
+export function ProfileIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="pillBlue" x1="4" y1="10" x2="16" y2="22" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-        <linearGradient id="pillWhite" x1="16" y1="10" x2="28" y2="22" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#dce6f5" />
-        </linearGradient>
-      </defs>
-      <path d="M9 10h6v12H9a6 6 0 0 1 0-12z" fill="url(#pillBlue)" />
-      <path d="M17 10h6a6 6 0 0 1 0 12h-6z" fill="url(#pillWhite)" />
-      <rect x="14.6" y="10" width="2.8" height="12" fill="#1b64da" opacity="0.25" />
-      <circle cx="12" cy="14.4" r="1.15" fill="#ffffff" opacity="0.65" />
+    <svg {...base(size)} className={className}>
+      <circle cx="12" cy="8" r="3.4" />
+      <path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4" />
     </svg>
   );
 }
 
-export function VaccineIcon({ size = 26 }: IconProps) {
+export function BellIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="vaccineGrad" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <g transform="rotate(45 16 16)">
-        <rect x="9" y="6" width="14" height="6" rx="1.6" fill="url(#vaccineGrad)" />
-        <rect x="7" y="12" width="18" height="10" rx="2" fill="url(#vaccineGrad)" />
-        <rect x="14.5" y="22" width="3" height="6" rx="1" fill="#1b64da" />
-        <rect x="11" y="14.5" width="10" height="1.6" fill="#ffffff" opacity="0.5" />
-        <rect x="11" y="17.5" width="10" height="1.6" fill="#ffffff" opacity="0.5" />
-      </g>
+    <svg {...base(size)} className={className}>
+      <path d="M6 10a6 6 0 0 1 12 0c0 4 1.4 5.6 1.4 5.6H4.6S6 14 6 10Z" />
+      <path d="M10 19a2 2 0 0 0 4 0" />
     </svg>
   );
 }
 
-export function DewormingIcon({ size = 26 }: IconProps) {
+export function PlusIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="dewormGrad" x1="6" y1="4" x2="26" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M16 4.2 26 8.4v7.2c0 6.8-4.3 10.9-10 12.2-5.7-1.3-10-5.4-10-12.2V8.4z"
-        fill="url(#dewormGrad)"
-      />
-      <path
-        d="M11 16.2 14.6 19.8 21.3 12.4"
-        stroke="#ffffff"
-        strokeWidth="2.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
+    <svg {...base(size)} className={className}>
+      <path d="M12 5v14M5 12h14" />
     </svg>
   );
 }
 
-export function HospitalIcon({ size = 26 }: IconProps) {
+export function ChevronRightIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="hospitalGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <rect x="4" y="4" width="24" height="24" rx="7" fill="url(#hospitalGrad)" />
-      <rect x="13.8" y="9" width="4.4" height="14" rx="1.6" fill="#ffffff" />
-      <rect x="9" y="13.8" width="14" height="4.4" rx="1.6" fill="#ffffff" />
+    <svg {...base(size)} className={className}>
+      <path d="m9 6 6 6-6 6" />
     </svg>
   );
 }
 
-export function GroomingIcon({ size = 26 }: IconProps) {
+export function CloseIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="groomGrad" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <path d="M12 20 25 7" stroke="url(#groomGrad)" strokeWidth="2.4" strokeLinecap="round" />
-      <path d="M16 20 3 7" stroke="url(#groomGrad)" strokeWidth="2.4" strokeLinecap="round" />
-      <circle cx="9.4" cy="23.2" r="3.4" fill="none" stroke="url(#groomGrad)" strokeWidth="2.4" />
-      <circle cx="18.6" cy="23.2" r="3.4" fill="none" stroke="url(#groomGrad)" strokeWidth="2.4" />
+    <svg {...base(size)} className={className}>
+      <path d="m6 6 12 12M18 6 6 18" />
     </svg>
   );
 }
 
-export function EtcIcon({ size = 26 }: IconProps) {
+export function CheckIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="etcGrad" x1="4" y1="4" x2="26" y2="26" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6fa8ff" />
-          <stop offset="1" stopColor="#2f6fe0" />
-        </linearGradient>
-      </defs>
-      <path d="M5 6h11.2L28 17.8 16.8 29 5 17.2z" fill="url(#etcGrad)" />
-      <circle cx="10.6" cy="11.6" r="2.1" fill="#ffffff" />
+    <svg {...base(size)} className={className}>
+      <path d="m5 13 4.5 4.5L19 8" />
     </svg>
   );
 }
 
-export function HomeIcon({ size = 22 }: IconProps) {
+export function CalendarIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 3.2 3 10.8h2.2v8.4c0 .83.67 1.5 1.5 1.5H10v-5.5a2 2 0 0 1 4 0v5.5h3.3c.83 0 1.5-.67 1.5-1.5v-8.4H21z"
-        fill="currentColor"
-      />
+    <svg {...base(size)} className={className}>
+      <rect x="4" y="5" width="16" height="15" rx="2" />
+      <path d="M4 9.5h16M8 3v3M16 3v3" />
     </svg>
   );
 }
 
-export function WeeklyIcon({ size = 22 }: IconProps) {
+export function WalletIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="4" y="12" width="4" height="8" rx="1.4" fill="currentColor" />
-      <rect x="10" y="7" width="4" height="13" rx="1.4" fill="currentColor" />
-      <rect x="16" y="3" width="4" height="17" rx="1.4" fill="currentColor" />
+    <svg {...base(size)} className={className}>
+      <rect x="3.5" y="6" width="17" height="13" rx="2" />
+      <path d="M3.5 10h17" />
+      <circle cx="16" cy="14" r="1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-export function CalendarIcon({ size = 22 }: IconProps) {
+export function EditIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M3 5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v3.6H3z" fill="currentColor" />
-      <rect x="7.1" y="12.2" width="3" height="3" rx="0.8" fill="currentColor" />
-      <rect x="13.9" y="12.2" width="3" height="3" rx="0.8" fill="currentColor" />
+    <svg {...base(size)} className={className}>
+      <path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3Z" />
+      <path d="m13.5 8 3 3" />
     </svg>
   );
 }
 
-export function ScheduleIcon({ size = 22 }: IconProps) {
+export function LogoutIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path
-        d="M8 11.3 10.2 13.5 16 7.7"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <line x1="8" y1="16.8" x2="16" y2="16.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    <svg {...base(size)} className={className}>
+      <path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2" />
+      <path d="M9 12h11m0 0-3-3m3 3-3 3" />
     </svg>
   );
 }
 
-export function ProfileIcon({ size = 22 }: IconProps) {
+export function InfoIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 20.3c-3.9-2.5-7.7-5.5-7.7-9.4a4.6 4.6 0 0 1 7.7-3.3 4.6 4.6 0 0 1 7.7 3.3c0 3.9-3.8 6.9-7.7 9.4z"
-        fill="currentColor"
-      />
-      <circle cx="9.4" cy="10.5" r="0.95" fill="var(--color-bg)" />
-      <circle cx="12" cy="9.5" r="1" fill="var(--color-bg)" />
-      <circle cx="14.6" cy="10.5" r="0.95" fill="var(--color-bg)" />
-      <ellipse cx="12" cy="12.4" rx="1.4" ry="1.1" fill="var(--color-bg)" />
+    <svg {...base(size)} className={className}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 11v5.5" />
+      <circle cx="12" cy="8" r="0.9" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-export function PawAvatarIcon({ size = 28 }: IconProps) {
+export function HelpIcon({ size = 24, className }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="avatarEar" x1="4" y1="8" x2="14" y2="20" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ffc179" />
-          <stop offset="1" stopColor="#ff9f43" />
-        </linearGradient>
-      </defs>
-      <circle cx="16" cy="16" r="16" fill="#eaf2ff" />
-      <ellipse cx="10.6" cy="15.5" rx="4.6" ry="5.6" fill="url(#avatarEar)" transform="rotate(-18 10.6 15.5)" />
-      <ellipse cx="17.5" cy="14" rx="8.4" ry="8" fill="#ffffff" />
-      <path d="M15.4 16.2c.6.6.6 1.2 0 1.8" stroke="#1c2536" strokeWidth="1.4" strokeLinecap="round" fill="none" />
-      <circle cx="22.6" cy="15.8" r="1.7" fill="#1c2536" />
+    <svg {...base(size)} className={className}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M9.6 9.5a2.4 2.4 0 1 1 3.6 2.1c-.8.5-1.2 1-1.2 2" />
+      <circle cx="12" cy="16.3" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function CameraIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1-2h6l1 2h2.5A1.5 1.5 0 0 1 20 8.5V18a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18Z" />
+      <circle cx="12" cy="13" r="3.4" />
+    </svg>
+  );
+}
+
+export function SparkleIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className} strokeWidth={0} fill="currentColor">
+      <path d="M11 3c.6 3 2.2 4.6 5.2 5.2-3 .6-4.6 2.2-5.2 5.2-.6-3-2.2-4.6-5.2-5.2C8.8 7.6 10.4 6 11 3Z" />
+      <path d="M17.2 13.5c.4 1.7 1.3 2.6 3 3-1.7.4-2.6 1.3-3 3-.4-1.7-1.3-2.6-3-3 1.7-.4 2.6-1.3 3-3Z" />
+    </svg>
+  );
+}
+
+export function PawIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className} strokeWidth={0} fill="currentColor">
+      <ellipse cx="12" cy="16" rx="5.4" ry="4.4" />
+      <circle cx="5.5" cy="10" r="2.2" />
+      <circle cx="9.5" cy="6" r="2.3" />
+      <circle cx="14.5" cy="6" r="2.3" />
+      <circle cx="18.5" cy="10" r="2.2" />
+    </svg>
+  );
+}
+
+// --- 기록/일정 카테고리 글리프 (IconTile과 함께 원형 배경 위에 사용) ---
+
+export function MealGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="M7 3v6a2 2 0 0 0 2 2v10M7 3v6M9 3v6" />
+      <path d="M15 3s-1.5 2-1.5 5 1.5 3.5 1.5 3.5V21" />
+    </svg>
+  );
+}
+
+export function WalkGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <circle cx="13.5" cy="4.5" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M11 8l-1.5 4L7 14.5V21M11 8l3 1 2 3.5-1 3.5 2.5 3M11 8l2.2-1.6L16 8" />
+    </svg>
+  );
+}
+
+export function PoopGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="M12 4c-1 0-1.6.8-1.3 1.7-1.8.6-3 2.3-3 4.2 0 .6.1 1.1.3 1.6-2.1.7-3.5 2.6-3.5 4.8 0 2.8 2.4 4.7 5.4 4.7h4.2c3 0 5.4-1.9 5.4-4.7 0-2.2-1.4-4.1-3.5-4.8.2-.5.3-1 .3-1.6 0-1.9-1.2-3.6-3-4.2C13.6 4.8 13 4 12 4Z" />
+    </svg>
+  );
+}
+
+export function ConditionGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M8.5 10.5h.01M15.5 10.5h.01" strokeWidth={2.4} />
+      <path d="M8.5 15c1 1 5.5 1 6.5 0" />
+    </svg>
+  );
+}
+
+export function MedicineGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <rect x="4" y="9" width="16" height="7" rx="3.5" transform="rotate(-30 12 12.5)" />
+      <path d="m11 9 2 7" transform="rotate(-30 12 12.5)" />
+    </svg>
+  );
+}
+
+export function VaccineGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="m18.5 5.5-3 3M9 15l6-6 3 3-6 6-3.5.5.5-3.5Z" />
+      <path d="m5 19 2.2-2.2" />
+    </svg>
+  );
+}
+
+export function HospitalGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <path d="M12 8v8M8 12h8" />
+    </svg>
+  );
+}
+
+export function GroomingGlyphIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="M6 6c3 3 3 9 3 9M18 6c-3 3-3 9-3 9" />
+      <circle cx="6" cy="6" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="18" cy="6" r="1.4" fill="currentColor" stroke="none" />
+      <path d="M6 15c1.5 2 4.5 3 6 3s4.5-1 6-3" />
     </svg>
   );
 }
