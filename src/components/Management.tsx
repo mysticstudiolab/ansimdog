@@ -115,7 +115,7 @@ export default function Management({
         onChange={setTab}
         options={[
           { value: 'schedule', label: '건강 일정' },
-          { value: 'expense', label: '생활비' },
+          { value: 'expense', label: '케어지출' },
         ]}
       />
       <div style={{ height: 16 }} />
@@ -158,7 +158,7 @@ export default function Management({
               <SectionTitle>완료된 일정</SectionTitle>
               {completed.map((s) => (
                 <div key={s.id} className="schedule-item" style={{ opacity: 0.6 }}>
-                  <div className="icon-tile icon-tile--neutral" style={{ width: 42, height: 42 }}>
+                  <div className="icon-tile icon-tile--primary" style={{ width: 42, height: 42 }}>
                     {(() => {
                       const Icon = scheduleIcon(s.category);
                       return <Icon size={20} />;
@@ -184,7 +184,7 @@ export default function Management({
       ) : (
         <>
           <div className="expense-summary">
-            <p className="expense-summary-label">이번 달 생활비</p>
+            <p className="expense-summary-label">이번 달 케어지출</p>
             <p className="expense-summary-value">{monthTotal.toLocaleString()}원</p>
           </div>
 

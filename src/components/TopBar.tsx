@@ -54,7 +54,7 @@ export default function TopBar({
             <button
               key={d.id}
               type="button"
-              className="pet-card"
+              className={`pet-card ${d.id === dog.id ? 'pet-card--selected' : ''}`}
               style={{ width: '100%', textAlign: 'left' }}
               onClick={() => {
                 onSelectDog!(d.id);

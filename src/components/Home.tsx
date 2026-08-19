@@ -6,15 +6,9 @@ import { daysBetween, recentDays, todayISO } from '../utils/dateUtils';
 import { buildAiBriefing, buildTodayChecklist, completionRate, detectHealthChanges, summarizePattern } from '../utils/analysis';
 import { buildHomeEmotionMessage } from '../utils/emotionalMessages';
 import { Badge, Card, IconTile, ProgressBar, SectionTitle } from './ui';
-import {
-  CheckIcon,
-  ChevronRightIcon,
-  ConditionGlyphIcon,
-  MealGlyphIcon,
-  MedicineGlyphIcon,
-  PoopGlyphIcon,
-  WalkGlyphIcon,
-} from './icons';
+import { CheckIcon, ChevronRightIcon } from './icons';
+import { CategoryIcon, type Category } from './categoryIcons';
+import catWalkIcon from '../assets/icons/cat-walk.png';
 import QuickRecordSheet, { type QuickField } from './QuickRecordSheet';
 import TopBar from './TopBar';
 import type { EmotionTone } from '../types';
@@ -84,23 +78,37 @@ export default function Home({
   const daysTogether = dog.adopted_at ? daysBetween(dog.adopted_at, today) + 1 : null;
   const daysTogetherNode =
     daysTogether !== null ? (
-      <span style={{ fontSize: 12, color: 'var(--color-text-sub)' }}>· 함께한 {daysTogether.toLocaleString()}일</span>
+      <span
+        style={{
+          fontSize: 12.5,
+          fontWeight: 700,
+          color: 'var(--color-primary)',
+          background: 'var(--color-border)',
+          padding: '3px 10px',
+          borderRadius: 999,
+        }}
+      >
+        함께한 {daysTogether.toLocaleString()}일
+      </span>
     ) : (
-      <button type="button" onClick={onGoProfileEdit} style={{ fontSize: 12, color: 'var(--color-text-sub)', textAlign: 'left' }}>
-        · 입양일을 등록하면 함께한 날을 세어드려요
+      <button
+        type="button"
+        onClick={onGoProfileEdit}
+        style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text)', textAlign: 'left', textDecoration: 'underline' }}
+      >
+        입양일을 등록하면 함께한 날을 세어드려요
       </button>
     );
 
-  const quickItems: { field: QuickField; label: string; Icon: typeof MealGlyphIcon; tone: 'primary' | 'accent' | 'sky' | 'success' | 'neutral'; done: boolean }[] = [
-    { field: 'meal', label: '식사', Icon: MealGlyphIcon, tone: 'success', done: !!todayLog && todayLog.meal_status !== 'unrecorded' },
-    { field: 'walk', label: '산책', Icon: WalkGlyphIcon, tone: 'primary', done: !!todayLog?.walked },
-    { field: 'poop', label: '배변', Icon: PoopGlyphIcon, tone: 'accent', done: !!todayLog && todayLog.poop_status !== 'none' },
-    { field: 'condition', label: '컨디션', Icon: ConditionGlyphIcon, tone: 'sky', done: !!todayLog && todayLog.condition !== 'unrecorded' },
+  const quickItems: { field: QuickField; label: string; category: Category; done: boolean }[] = [
+    { field: 'meal', label: '식사', category: 'meal', done: !!todayLog && todayLog.meal_status !== 'unrecorded' },
+    { field: 'walk', label: '산책', category: 'walk', done: !!todayLog?.walked },
+    { field: 'poop', label: '배변', category: 'poop', done: !!todayLog && todayLog.poop_status !== 'none' },
+    { field: 'condition', label: '컨디션', category: 'mood', done: !!todayLog && todayLog.condition !== 'unrecorded' },
     {
       field: 'medicine',
       label: '투약',
-      Icon: MedicineGlyphIcon,
-      tone: 'neutral',
+      category: 'med',
       done: todayLog?.medicine_taken === true || todayLog?.medicine_taken === null,
     },
   ];
@@ -119,6 +127,7 @@ export default function Home({
       <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} extra={daysTogetherNode} />
 
       <div className={`hero-card hero-card--${emotion.tone}`}>
+        <img src={catWalkIcon} alt="" className="hero-card-paw" />
         <div className="hero-card-text">
           <span className="hero-tone-chip">
             {HERO_TONE_ICON[emotion.tone]} {HERO_TONE_LABEL[emotion.tone]}
@@ -135,10 +144,10 @@ export default function Home({
         </Card>
       )}
 
-      <Card>
+      <div style={{ marginBottom: 16 }}>
         <div className="progress-header">
           <div>
-            <p style={{ fontWeight: 700, fontSize: 15 }}>기록 달성률</p>
+            <p style={{ fontWeight: 700, fontSize: 18 }}>기록 달성률</p>
             <p style={{ fontSize: 12.5, color: 'var(--color-text-sub)' }}>
               오늘의 건강기록 {checklist.filter((c) => c.done).length} / {checklist.length} 완료
             </p>
@@ -153,7 +162,7 @@ export default function Home({
             </span>
           ))}
         </div>
-      </Card>
+      </div>
 
       <SectionTitle>빠른 기록</SectionTitle>
       <Card>
@@ -161,8 +170,8 @@ export default function Home({
           {quickItems.map((item) => (
             <button key={item.field} type="button" className={`quick-record-item ${item.done ? 'quick-record-item--done' : ''}`} onClick={() => setActiveField(item.field)}>
               <span style={{ position: 'relative', display: 'inline-flex' }}>
-                <IconTile tone={item.done ? item.tone : 'muted'}>
-                  <item.Icon size={20} />
+                <IconTile tone={item.category}>
+                  <CategoryIcon category={item.category} size={22} />
                 </IconTile>
                 {item.done && (
                   <span className="quick-record-check">
@@ -202,7 +211,6 @@ export default function Home({
       <div className="briefing-card">
         <div className="briefing-header">
           <span>AI 건강 브리핑</span>
-          <Badge tone="primary">Beta</Badge>
         </div>
         <p className="briefing-body">{briefing}</p>
       </div>

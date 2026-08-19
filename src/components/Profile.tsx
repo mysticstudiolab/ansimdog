@@ -71,7 +71,7 @@ export default function Profile({
 
       <h2 className="section-title">나의 반려견</h2>
       {dogs.map((dog) => (
-        <div key={dog.id} className="pet-card">
+        <div key={dog.id} className={`pet-card ${dog.id === selectedDogId ? 'pet-card--selected' : ''}`}>
           <button type="button" style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1, textAlign: 'left' }} onClick={() => onSelectDog(dog.id)}>
             <div className="avatar avatar-md">
               {dog.photo_url ? (

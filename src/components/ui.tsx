@@ -57,7 +57,10 @@ export function IconTile({
   children,
   tone = 'primary',
   size = 44,
-}: PropsWithChildren<{ tone?: 'primary' | 'accent' | 'sky' | 'success' | 'neutral' | 'muted'; size?: number }>) {
+}: PropsWithChildren<{
+  tone?: 'primary' | 'accent' | 'success' | 'neutral' | 'muted' | 'meal' | 'walk' | 'poop' | 'mood' | 'med';
+  size?: number;
+}>) {
   return (
     <div className={`icon-tile icon-tile--${tone}`} style={{ width: size, height: size }}>
       {children}

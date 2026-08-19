@@ -1,35 +1,41 @@
 /* =============================================================
-   안심하개 색상 사용 규칙 (2026-08-19 정리)
+   안심하개 색상 사용 규칙 (2026-08-19 "산뜻하고 사랑스러운" 톤으로 재조정)
    - 안심 블루(--color-primary): 브랜드 식별, 주요 CTA, 현재 선택/활성 상태에만 사용한다.
+     한 화면에 --color-primary로 꽉 채운 면은 최대 1개까지.
+   - 초록(--color-success): 완료·정상 범위에만 사용한다. 브랜드 자리(버튼, 탭,
+     선택 상태)에는 쓰지 않는다.
    - 살구 피치(--color-warning): 주의가 필요한 값, 다가오는 일정, 보조 액션에 사용한다.
-     완료 상태에는 쓰지 않는다.
-   - 초록(--color-success): 완료·정상 범위에만 사용한다. 브랜드 블루와 절대 섞지 않는다.
-   - 살구(--color-warning)는 흰 배경 위 작은 본문 텍스트 색으로 사용 금지 —
-     큰 숫자, 배지, 면 채우기에만 사용한다.
-   - 한 화면에 --color-primary로 꽉 채운 면은 최대 1개까지.
+     흰 배경 위 작은 본문 텍스트 색으로는 사용 금지 — 배지, 큰 숫자, 면 채우기에만.
+   - 카테고리 파스텔(--cat-*): 기록 항목 아이콘 배경 전용. 배경에만 쓰고,
+     그 위 본문 텍스트는 항상 --color-text로 또렷하게 유지한다(파스텔 텍스트 금지).
    ============================================================= */
 :root {
   /* 브랜드 */
-  --color-primary: #4e9d88; /* 안심 블루 - 브랜드, 주요 액션, 현재 선택 */
-  --color-primary-soft: #b4d5dd; /* 맑은 스카이 - 조용한 정보 면, 아이콘 배경 */
-  --color-primary-bg: #edf5f3; /* primary를 배경 위 10% 혼합한 옅은 톤 */
-  --color-primary-soft-bg: #f8fbfc; /* primary-soft를 배경 위 10% 혼합한 옅은 톤 */
+  --color-primary: #5b9bf5; /* 밝고 맑은 블루 - 브랜드, 주요 CTA, 활성 상태 */
+  --color-primary-bg: #eaf2fe; /* 연한 블루 배경 */
 
   /* 시맨틱 */
-  --color-warning: #f99d45; /* 살구 피치 - 주의, 예정, 보조 액션 */
-  --color-warning-bg: #fef5ec; /* warning을 배경 위 10% 혼합한 옅은 톤 */
-  --color-success: #3ba776; /* 완료, 정상 (팔레트 외 추가 색) */
-  --color-success-bg: #ebf6f1; /* success를 배경 위 10% 혼합한 옅은 톤 */
+  --color-success: #2fbf87; /* 밝은 민트그린 - 완료, 정상 */
+  --color-success-bg: #e4f7ef;
+  --color-warning: #f99d45; /* 살구 - 주의, 예정 일정 */
+  --color-warning-bg: #fef0e2;
 
   /* 중립 */
-  --color-text: #2d3748; /* 딥 네이비 - 본문 텍스트 */
-  --color-text-sub: #6b7280; /* 보조 텍스트 */
+  --color-text: #2d3748;
+  --color-text-sub: #8a94a6;
   --color-text-faint: #98a0ab;
-  --color-bg: #f0ebe5; /* 포근 아이보리 - 앱 배경 */
-  --color-surface: #ffffff; /* 카드 면 */
-  --color-border: #e5e0da;
+  --color-bg: #faf7f3; /* 밝은 아이보리 - 기존보다 훨씬 밝게 */
+  --color-surface: #ffffff;
+  --color-border: #f0ebe5;
 
-  /* 이번 정리 범위 밖 — 기존 값 유지 (다음 단계에서 재검토 예정) */
+  /* 카테고리 파스텔 (기록 항목별 아이콘 배경용) */
+  --cat-meal: #dff5ec; /* 식사 - 연민트 */
+  --cat-walk: #e3effd; /* 산책 - 연하늘 */
+  --cat-poop: #f5ebde; /* 배변 - 연베이지 */
+  --cat-mood: #fcf3da; /* 컨디션 - 연노랑 */
+  --cat-med: #ede8fa; /* 투약 - 연라벤더 */
+
+  /* 이번 정리 범위 밖 — 기존 값 유지 */
   --color-primary-dark: #2063c0;
   --color-danger: #d6534a;
 
@@ -163,7 +169,7 @@ img {
 .avatar {
   border-radius: 999px;
   object-fit: cover;
-  background: var(--color-primary-soft-bg);
+  background: var(--color-primary-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +202,7 @@ img {
   border-radius: var(--radius-lg);
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 2px rgba(45, 55, 72, 0.04), 0 8px 20px -12px rgba(80, 141, 226, 0.18);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
 }
 
 .section-title-row {
@@ -208,7 +214,7 @@ img {
 
 .section-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text);
 }
 
@@ -222,17 +228,31 @@ img {
 
 .hero-card {
   position: relative;
+  overflow: hidden;
   border-radius: var(--radius-lg);
   min-height: 152px;
   margin-bottom: 16px;
-  background: var(--color-primary);
+  background: var(--color-primary-bg);
   display: flex;
   align-items: flex-end;
 }
 
+.hero-card-paw {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
 .hero-card-text {
+  position: relative;
   padding: 20px 20px 22px;
-  color: #fff;
+  color: var(--color-text);
 }
 
 .hero-tone-chip {
@@ -241,12 +261,13 @@ img {
   gap: 6px;
   padding: 5px 12px 5px 8px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(6px);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   margin-bottom: 10px;
+  color: var(--color-text);
 }
 
 .hero-eyebrow {
@@ -270,10 +291,6 @@ img {
   white-space: pre-line;
 }
 
-.hero-card--calm-alert {
-  background: #5c7286;
-}
-
 /* ---------- 진행률 ---------- */
 
 .progress-header {
@@ -286,7 +303,7 @@ img {
   font-family: var(--font-display);
   font-size: 26px;
   font-weight: 800;
-  color: var(--color-primary);
+  color: var(--color-success);
 }
 
 .progress-track {
@@ -301,7 +318,7 @@ img {
 .progress-fill {
   height: 100%;
   border-radius: var(--radius-full);
-  background: var(--color-primary);
+  background: var(--color-success);
   transition: width 0.4s ease;
 }
 
@@ -364,7 +381,7 @@ img {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-success);
   color: #fff;
   display: flex;
   align-items: center;
@@ -373,7 +390,7 @@ img {
 }
 
 .icon-tile {
-  border-radius: 16px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -390,11 +407,6 @@ img {
   color: var(--color-warning);
 }
 
-.icon-tile--sky {
-  background: var(--color-primary-soft-bg);
-  color: #4b7f8f;
-}
-
 .icon-tile--neutral {
   background: var(--color-bg);
   color: var(--color-text-sub);
@@ -408,6 +420,32 @@ img {
 .icon-tile--muted {
   background: var(--color-border);
   color: var(--color-text-faint);
+}
+
+/* 카테고리 파스텔 아이콘 배경 — 배경에만 사용, 아이콘 글리프는 --color-text로 또렷하게 */
+.icon-tile--meal {
+  background: var(--cat-meal);
+  color: var(--color-text);
+}
+
+.icon-tile--walk {
+  background: var(--cat-walk);
+  color: var(--color-text);
+}
+
+.icon-tile--poop {
+  background: var(--cat-poop);
+  color: var(--color-text);
+}
+
+.icon-tile--mood {
+  background: var(--cat-mood);
+  color: var(--color-text);
+}
+
+.icon-tile--med {
+  background: var(--cat-med);
+  color: var(--color-text);
 }
 
 /* ---------- AI 브리핑 ---------- */
@@ -454,7 +492,7 @@ img {
 }
 
 .emotion-card--calm-alert {
-  background: var(--color-primary-soft-bg);
+  background: var(--color-warning-bg);
 }
 
 .emotion-emoji {
@@ -577,7 +615,8 @@ img {
   align-items: center;
   gap: 4px;
   padding: 10px 0;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
   font-size: 12px;
   color: var(--color-text-sub);
   background: var(--color-surface);
@@ -617,7 +656,8 @@ img {
   align-items: center;
   gap: 10px;
   background: var(--color-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
   padding: 14px;
 }
 
@@ -673,7 +713,8 @@ img {
 
 .timeline-card {
   background: var(--color-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
   padding: 12px 14px;
 }
 
@@ -769,26 +810,29 @@ img {
   align-items: center;
   gap: 8px;
   padding: 18px 10px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   font-size: 13.5px;
   font-weight: 700;
-  background: var(--color-bg);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
   color: var(--color-text);
 }
 
 .report-btn--primary {
   background: var(--color-primary);
+  border-color: var(--color-primary);
   color: #fff;
 }
 
-/* ---------- 관리: 일정 / 생활비 ---------- */
+/* ---------- 관리: 일정 / 케어지출 ---------- */
 
 .schedule-item {
   display: flex;
   align-items: center;
   gap: 12px;
   background: var(--color-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
   padding: 14px;
   margin-bottom: 10px;
 }
@@ -903,9 +947,15 @@ img {
   align-items: center;
   gap: 14px;
   background: var(--color-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(45, 55, 72, 0.06);
+  border-left: 4px solid transparent;
   padding: 14px;
   margin-bottom: 10px;
+}
+
+.pet-card--selected {
+  border-left-color: var(--color-primary);
 }
 
 .pet-card-name {
@@ -995,7 +1045,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 24px -6px rgba(80, 141, 226, 0.55);
+  box-shadow: 0 10px 24px -6px rgba(91, 155, 245, 0.55);
   z-index: 15;
 }
 
@@ -1120,7 +1170,7 @@ textarea.input {
 .btn {
   width: 100%;
   padding: 14px 18px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font-size: 15px;
   font-weight: 700;
   display: inline-flex;

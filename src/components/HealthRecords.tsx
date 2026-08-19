@@ -3,13 +3,18 @@ import type { DailyLog, Dog } from '../types';
 import { fetchDailyLogsRange } from '../utils/records';
 import { currentWeek, formatMonthDay, formatMonthWeek, recentDays, todayISO, weekdayLabel } from '../utils/dateUtils';
 import { IconTile, PrimaryButton, SectionTitle } from './ui';
-import { ConditionGlyphIcon, MealGlyphIcon, PlusIcon, PoopGlyphIcon, WalkGlyphIcon } from './icons';
+import { PlusIcon } from './icons';
+import { CategoryIcon } from './categoryIcons';
 import RecordSheet from './RecordSheet';
 import TopBar from './TopBar';
 
 const MEAL_LABEL: Record<string, string> = { unrecorded: '미기록', normal: '정상', less: '적게 먹음', none: '먹지 않음' };
 const POOP_LABEL: Record<string, string> = { none: '기록 없음', normal: '정상 변', soft: '무른 변', hard: '딱딱한 변', diarrhea: '설사' };
 const CONDITION_LABEL: Record<string, string> = { unrecorded: '미기록', normal: '평소와 같음', different: '조금 다름', concerning: '많이 다름' };
+
+const isAbnormalMeal = (status?: string) => status === 'less' || status === 'none';
+const isAbnormalPoop = (status?: string) => status === 'diarrhea';
+const isAbnormalCondition = (condition?: string) => condition === 'concerning';
 
 export default function HealthRecords({
   dog,
@@ -72,39 +77,56 @@ export default function HealthRecords({
       <SectionTitle>{selectedDate === today ? '오늘의 요약' : `${formatMonthDay(selectedDate)} 요약`}</SectionTitle>
       <div className="summary-grid">
         <div className="summary-card">
-          <IconTile tone="success" size={38}>
-            <MealGlyphIcon size={18} />
+          <IconTile tone="meal" size={38}>
+            <CategoryIcon category="meal" size={22} />
           </IconTile>
           <div>
             <p className="summary-card-label">식사</p>
-            <p className="summary-card-value">{MEAL_LABEL[selectedLog?.meal_status ?? 'unrecorded']}</p>
+            <p
+              className="summary-card-value"
+              style={{ color: isAbnormalMeal(selectedLog?.meal_status) ? 'var(--color-warning)' : 'var(--color-text)' }}
+            >
+              {MEAL_LABEL[selectedLog?.meal_status ?? 'unrecorded']}
+            </p>
           </div>
         </div>
         <div className="summary-card">
-          <IconTile tone="primary" size={38}>
-            <WalkGlyphIcon size={18} />
+          <IconTile tone="walk" size={38}>
+            <CategoryIcon category="walk" size={22} />
           </IconTile>
           <div>
             <p className="summary-card-label">산책</p>
-            <p className="summary-card-value">{selectedLog?.walked ? `${selectedLog.walk_minutes}분` : '미기록'}</p>
+            <p className="summary-card-value" style={{ color: 'var(--color-text)' }}>
+              {selectedLog?.walked ? `${selectedLog.walk_minutes}분` : '미기록'}
+            </p>
           </div>
         </div>
         <div className="summary-card">
-          <IconTile tone="accent" size={38}>
-            <PoopGlyphIcon size={18} />
+          <IconTile tone="poop" size={38}>
+            <CategoryIcon category="poop" size={22} />
           </IconTile>
           <div>
             <p className="summary-card-label">배변</p>
-            <p className="summary-card-value">{POOP_LABEL[selectedLog?.poop_status ?? 'none']}</p>
+            <p
+              className="summary-card-value"
+              style={{ color: isAbnormalPoop(selectedLog?.poop_status) ? 'var(--color-warning)' : 'var(--color-text)' }}
+            >
+              {POOP_LABEL[selectedLog?.poop_status ?? 'none']}
+            </p>
           </div>
         </div>
         <div className="summary-card">
-          <IconTile tone="sky" size={38}>
-            <ConditionGlyphIcon size={18} />
+          <IconTile tone="mood" size={38}>
+            <CategoryIcon category="mood" size={22} />
           </IconTile>
           <div>
             <p className="summary-card-label">컨디션</p>
-            <p className="summary-card-value">{CONDITION_LABEL[selectedLog?.condition ?? 'unrecorded']}</p>
+            <p
+              className="summary-card-value"
+              style={{ color: isAbnormalCondition(selectedLog?.condition) ? 'var(--color-warning)' : 'var(--color-text)' }}
+            >
+              {CONDITION_LABEL[selectedLog?.condition ?? 'unrecorded']}
+            </p>
           </div>
         </div>
       </div>

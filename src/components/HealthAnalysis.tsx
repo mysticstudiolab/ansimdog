@@ -4,7 +4,7 @@ import { fetchDailyLogsRange } from '../utils/records';
 import { recentDays, todayISO, weekdayLabel } from '../utils/dateUtils';
 import { buildAiBriefing, detectHealthChanges, summarizePattern } from '../utils/analysis';
 import { buildAnalysisEmotionMessage } from '../utils/emotionalMessages';
-import { Badge, Card, EmotionCard, Segmented, SectionTitle } from './ui';
+import { Card, EmotionCard, Segmented, SectionTitle } from './ui';
 import TopBar from './TopBar';
 import HealthReportSheet from './HealthReportSheet';
 
@@ -76,7 +76,7 @@ export default function HealthAnalysis({
             </p>
             <div className="summary-grid" style={{ marginBottom: 0 }}>
               <StatTile label="평균 산책" value={`${pattern.avgWalkMinutes}분`} />
-              <StatTile label="식사 정상 비율" value={`${pattern.mealNormalRate}%`} />
+              <StatTile label="식사 정상 비율" value={`${pattern.mealNormalRate}%`} low={pattern.sampleSize > 0 && pattern.mealNormalRate < 70} />
               <StatTile label="평균 배변" value={`${pattern.avgPoopCount}회`} />
               <StatTile label="기록 일수" value={`${pattern.sampleSize}일`} />
             </div>
@@ -110,7 +110,6 @@ export default function HealthAnalysis({
           <div className="briefing-card">
             <div className="briefing-header">
               <span>AI 건강 브리핑</span>
-              <Badge tone="primary">Beta</Badge>
             </div>
             <p className="briefing-body">{briefing}</p>
           </div>
@@ -143,11 +142,11 @@ export default function HealthAnalysis({
   );
 }
 
-function StatTile({ label, value }: { label: string; value: string }) {
+function StatTile({ label, value, low }: { label: string; value: string; low?: boolean }) {
   return (
     <div>
       <p className="summary-card-label">{label}</p>
-      <p className="summary-card-value" style={{ fontSize: 16 }}>
+      <p className="summary-card-value" style={{ fontSize: 16, color: low ? 'var(--color-warning)' : 'var(--color-text)' }}>
         {value}
       </p>
     </div>
