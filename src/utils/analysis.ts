@@ -25,7 +25,12 @@ export function buildTodayChecklist(todayLog: DailyLog | undefined, schedules: S
   ];
 
   if (hasMedicineToday) {
-    list.push({ key: 'medicine', label: '투약', done: !!todayLog?.medicine_taken, required: true });
+    list.push({
+      key: 'medicine',
+      label: '투약',
+      done: todayLog?.medicine_taken === true || todayLog?.medicine_taken === null,
+      required: true,
+    });
   }
 
   return list;

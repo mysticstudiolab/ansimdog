@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import type { DailyLog, Dog, Schedule } from '../types';
 import { supabase } from '../utils/supabaseClient';
 import { fetchDailyLog, fetchDailyLogsRange } from '../utils/records';
-import { recentDays, todayISO } from '../utils/dateUtils';
+import { daysBetween, recentDays, todayISO } from '../utils/dateUtils';
 import { buildAiBriefing, buildTodayChecklist, completionRate, detectHealthChanges, summarizePattern } from '../utils/analysis';
 import { buildHomeEmotionMessage } from '../utils/emotionalMessages';
-import { Badge, BottomSheet, Card, IconTile, ProgressBar, SectionTitle } from './ui';
+import { Badge, Card, IconTile, ProgressBar, SectionTitle } from './ui';
 import {
   CheckIcon,
   ChevronRightIcon,
@@ -36,11 +36,13 @@ export default function Home({
   dogs,
   onSelectDog,
   onGoAnalysis,
+  onGoProfileEdit,
 }: {
   dog: Dog;
   dogs: Dog[];
   onSelectDog: (id: string) => void;
   onGoAnalysis: () => void;
+  onGoProfileEdit: () => void;
 }) {
   const today = todayISO();
   const [todayLog, setTodayLog] = useState<DailyLog | undefined>(undefined);
@@ -48,7 +50,6 @@ export default function Home({
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeField, setActiveField] = useState<QuickField | null>(null);
-  const [switcherOpen, setSwitcherOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -80,18 +81,34 @@ export default function Home({
 
   const todaySchedule = schedules.find((s) => s.scheduled_date === today && !s.is_completed);
 
+  const daysTogether = dog.adopted_at ? daysBetween(dog.adopted_at, today) + 1 : null;
+  const daysTogetherNode =
+    daysTogether !== null ? (
+      <span style={{ fontSize: 12, color: 'var(--color-text-sub)' }}>· 함께한 {daysTogether.toLocaleString()}일</span>
+    ) : (
+      <button type="button" onClick={onGoProfileEdit} style={{ fontSize: 12, color: 'var(--color-text-sub)', textAlign: 'left' }}>
+        · 입양일을 등록하면 함께한 날을 세어드려요
+      </button>
+    );
+
   const quickItems: { field: QuickField; label: string; Icon: typeof MealGlyphIcon; tone: 'primary' | 'accent' | 'sky' | 'success' | 'neutral'; done: boolean }[] = [
     { field: 'meal', label: '식사', Icon: MealGlyphIcon, tone: 'success', done: !!todayLog && todayLog.meal_status !== 'unrecorded' },
     { field: 'walk', label: '산책', Icon: WalkGlyphIcon, tone: 'primary', done: !!todayLog?.walked },
     { field: 'poop', label: '배변', Icon: PoopGlyphIcon, tone: 'accent', done: !!todayLog && todayLog.poop_status !== 'none' },
     { field: 'condition', label: '컨디션', Icon: ConditionGlyphIcon, tone: 'sky', done: !!todayLog && todayLog.condition !== 'unrecorded' },
-    { field: 'medicine', label: '투약', Icon: MedicineGlyphIcon, tone: 'neutral', done: !!todayLog?.medicine_taken },
+    {
+      field: 'medicine',
+      label: '투약',
+      Icon: MedicineGlyphIcon,
+      tone: 'neutral',
+      done: todayLog?.medicine_taken === true || todayLog?.medicine_taken === null,
+    },
   ];
 
   if (loading) {
     return (
       <div>
-        <TopBar dog={dog} onOpenSwitcher={() => setSwitcherOpen(true)} />
+        <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} extra={daysTogetherNode} />
         <div className="empty-state">오늘의 기록을 불러오고 있어요...</div>
       </div>
     );
@@ -99,7 +116,7 @@ export default function Home({
 
   return (
     <div>
-      <TopBar dog={dog} onOpenSwitcher={() => setSwitcherOpen(true)} />
+      <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} extra={daysTogetherNode} />
 
       <div className={`hero-card hero-card--${emotion.tone}`}>
         <div className="hero-card-text">
@@ -189,31 +206,6 @@ export default function Home({
         </div>
         <p className="briefing-body">{briefing}</p>
       </div>
-
-      {dogs.length > 1 && (
-        <BottomSheet open={switcherOpen} title="반려견 전환" onClose={() => setSwitcherOpen(false)}>
-          {dogs.map((d) => (
-            <button
-              key={d.id}
-              type="button"
-              className="pet-card"
-              style={{ width: '100%', textAlign: 'left' }}
-              onClick={() => {
-                onSelectDog(d.id);
-                setSwitcherOpen(false);
-              }}
-            >
-              <div className="avatar avatar-md">
-                {d.photo_url ? <img src={d.photo_url} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 999 }} /> : d.profile_emoji}
-              </div>
-              <div>
-                <p className="pet-card-name">{d.name}</p>
-                <p className="pet-card-sub">{d.breed || '품종 미등록'}</p>
-              </div>
-            </button>
-          ))}
-        </BottomSheet>
-      )}
 
       {activeField && (
         <QuickRecordSheet

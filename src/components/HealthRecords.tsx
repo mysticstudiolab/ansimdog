@@ -11,7 +11,15 @@ const MEAL_LABEL: Record<string, string> = { unrecorded: '미기록', normal: '�
 const POOP_LABEL: Record<string, string> = { none: '기록 없음', normal: '정상 변', soft: '무른 변', hard: '딱딱한 변', diarrhea: '설사' };
 const CONDITION_LABEL: Record<string, string> = { unrecorded: '미기록', normal: '평소와 같음', different: '조금 다름', concerning: '많이 다름' };
 
-export default function HealthRecords({ dog }: { dog: Dog }) {
+export default function HealthRecords({
+  dog,
+  dogs,
+  onSelectDog,
+}: {
+  dog: Dog;
+  dogs: Dog[];
+  onSelectDog: (id: string) => void;
+}) {
   const today = todayISO();
   const [selectedDate, setSelectedDate] = useState(today);
   const [logs, setLogs] = useState<DailyLog[]>([]);
@@ -43,7 +51,7 @@ export default function HealthRecords({ dog }: { dog: Dog }) {
 
   return (
     <div>
-      <TopBar dog={dog} />
+      <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} />
       <SectionTitle>건강기록</SectionTitle>
 
       <p style={{ fontSize: 13, color: 'var(--color-text-sub)', marginBottom: 8 }}>{formatMonthWeek(selectedDate)}</p>

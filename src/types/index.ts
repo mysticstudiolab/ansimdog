@@ -6,6 +6,8 @@ export interface Dog {
   name: string;
   breed: string | null;
   birth_date: string | null;
+  adopted_at: string | null;
+  adopted_at_is_estimated: boolean;
   gender: Gender;
   weight_kg: number | null;
   neutered: boolean;
@@ -16,12 +18,12 @@ export interface Dog {
   created_at: string;
 }
 
-export type NewDog = Pick<Dog, 'name'> &
+export type NewDog = Pick<Dog, 'name' | 'birth_date' | 'adopted_at'> &
   Partial<
     Pick<
       Dog,
       | 'breed'
-      | 'birth_date'
+      | 'adopted_at_is_estimated'
       | 'gender'
       | 'weight_kg'
       | 'neutered'
@@ -76,7 +78,7 @@ export interface DailyLog {
   walk_minutes: number;
   poop_count: number;
   poop_status: PoopStatus;
-  medicine_taken: boolean;
+  medicine_taken: boolean | null;
   mood: Mood;
   condition: Condition;
   symptom_tags: string[];

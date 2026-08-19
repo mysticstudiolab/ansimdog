@@ -215,8 +215,9 @@ export default function QuickRecordSheet({
 
       {field === 'medicine' && (
         <div className="option-grid">
-          <Chip label="복용 완료" active={!!current?.medicine_taken} onClick={() => save({ medicine_taken: true })} />
-          <Chip label="아직 안 먹음" active={!current?.medicine_taken} onClick={() => save({ medicine_taken: false })} />
+          <Chip label="복용 완료" active={current?.medicine_taken === true} onClick={() => save({ medicine_taken: true })} />
+          <Chip label="아직 안 먹음" active={current?.medicine_taken === false} onClick={() => save({ medicine_taken: false })} />
+          <Chip label="복용 없음" active={current?.medicine_taken == null} onClick={() => save({ medicine_taken: null })} />
         </div>
       )}
     </BottomSheet>

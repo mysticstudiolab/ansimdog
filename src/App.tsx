@@ -16,6 +16,7 @@ export default function App() {
   const [selectedDogId, setSelectedDogId] = useState<string | null>(null);
   const [screen, setScreen] = useState<ScreenName>('home');
   const [error, setError] = useState<string | null>(null);
+  const [openPetEditOnProfile, setOpenPetEditOnProfile] = useState(false);
 
   const loadDogs = useCallback(async () => {
     const { data, error: fetchError } = await supabase
@@ -93,13 +94,29 @@ export default function App() {
     <div className="app-shell">
       <div className="app-main">
         {screen === 'home' && (
-          <Home dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} onGoAnalysis={() => setScreen('analysis')} />
+          <Home
+            dog={selectedDog}
+            dogs={dogs}
+            onSelectDog={setSelectedDogId}
+            onGoAnalysis={() => setScreen('analysis')}
+            onGoProfileEdit={() => {
+              setScreen('profile');
+              setOpenPetEditOnProfile(true);
+            }}
+          />
         )}
-        {screen === 'records' && <HealthRecords dog={selectedDog} />}
-        {screen === 'analysis' && <HealthAnalysis dog={selectedDog} />}
-        {screen === 'management' && <Management dog={selectedDog} />}
+        {screen === 'records' && <HealthRecords dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} />}
+        {screen === 'analysis' && <HealthAnalysis dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} />}
+        {screen === 'management' && <Management dog={selectedDog} dogs={dogs} onSelectDog={setSelectedDogId} />}
         {screen === 'profile' && (
-          <Profile dogs={dogs} selectedDogId={selectedDog.id} onSelectDog={setSelectedDogId} onChanged={loadDogs} />
+          <Profile
+            dogs={dogs}
+            selectedDogId={selectedDog.id}
+            onSelectDog={setSelectedDogId}
+            onChanged={loadDogs}
+            autoOpenEdit={openPetEditOnProfile}
+            onAutoOpenHandled={() => setOpenPetEditOnProfile(false)}
+          />
         )}
       </div>
       <BottomNav screen={screen} onChange={setScreen} />

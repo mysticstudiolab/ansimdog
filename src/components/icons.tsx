@@ -82,6 +82,14 @@ export function ChevronRightIcon({ size = 24, className }: IconProps) {
   );
 }
 
+export function ChevronDownIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
 export function CloseIcon({ size = 24, className }: IconProps) {
   return (
     <svg {...base(size)} className={className}>

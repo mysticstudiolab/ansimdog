@@ -48,7 +48,7 @@ export default function RecordSheet({
     (current?.symptom_tags ?? []).map((t) => (t.startsWith('기타:') ? OTHER_SYMPTOM_TAG : t))
   );
   const [otherSymptomText, setOtherSymptomText] = useState(existingOther ? existingOther.replace(/^기타:\s*/, '') : '');
-  const [medicineTaken, setMedicineTaken] = useState(current?.medicine_taken ?? false);
+  const [medicineTaken, setMedicineTaken] = useState<boolean | null>(current?.medicine_taken ?? null);
   const [memo, setMemo] = useState(current?.memo ?? '');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -162,8 +162,9 @@ export default function RecordSheet({
 
       <FormField label="약 복용">
         <div className="option-grid">
-          <Chip label="복용 완료" active={medicineTaken} onClick={() => setMedicineTaken(true)} />
-          <Chip label="아직 안 먹음" active={!medicineTaken} onClick={() => setMedicineTaken(false)} />
+          <Chip label="복용 완료" active={medicineTaken === true} onClick={() => setMedicineTaken(true)} />
+          <Chip label="아직 안 먹음" active={medicineTaken === false} onClick={() => setMedicineTaken(false)} />
+          <Chip label="복용 없음" active={medicineTaken === null} onClick={() => setMedicineTaken(null)} />
         </div>
       </FormField>
 

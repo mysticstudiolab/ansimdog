@@ -10,7 +10,15 @@ import HealthReportSheet from './HealthReportSheet';
 
 type Period = 'week' | 'month';
 
-export default function HealthAnalysis({ dog }: { dog: Dog }) {
+export default function HealthAnalysis({
+  dog,
+  dogs,
+  onSelectDog,
+}: {
+  dog: Dog;
+  dogs: Dog[];
+  onSelectDog: (id: string) => void;
+}) {
   const today = todayISO();
   const [period, setPeriod] = useState<Period>('week');
   const [logs, setLogs] = useState<DailyLog[]>([]);
@@ -45,7 +53,7 @@ export default function HealthAnalysis({ dog }: { dog: Dog }) {
 
   return (
     <div>
-      <TopBar dog={dog} />
+      <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} />
       <div className="section-title-row">
         <h2 className="section-title">건강분석</h2>
         <Segmented

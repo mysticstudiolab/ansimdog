@@ -43,7 +43,15 @@ function scheduleIcon(category: ScheduleCategory) {
   return WalletIcon;
 }
 
-export default function Management({ dog }: { dog: Dog }) {
+export default function Management({
+  dog,
+  dogs,
+  onSelectDog,
+}: {
+  dog: Dog;
+  dogs: Dog[];
+  onSelectDog: (id: string) => void;
+}) {
   const [tab, setTab] = useState<Tab>('schedule');
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -98,7 +106,7 @@ export default function Management({ dog }: { dog: Dog }) {
 
   return (
     <div>
-      <TopBar dog={dog} />
+      <TopBar dog={dog} dogs={dogs} onSelectDog={onSelectDog} />
       <div className="section-title-row">
         <h2 className="section-title">관리</h2>
       </div>

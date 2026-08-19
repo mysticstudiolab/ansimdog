@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Gender, NewDog } from '../types';
 import { supabase } from '../utils/supabaseClient';
 import { Chip, FormField, PrimaryButton } from './ui';
@@ -28,11 +28,21 @@ export default function PetForm({
   const [uploading, setUploading] = useState(false);
   const [breed, setBreed] = useState(initial?.breed ?? '');
   const [birthDate, setBirthDate] = useState(initial?.birth_date ?? '');
+  const [adoptedAt, setAdoptedAt] = useState(initial?.adopted_at ?? '');
+  const [adoptedAtIsEstimated, setAdoptedAtIsEstimated] = useState(initial?.adopted_at_is_estimated ?? false);
   const [gender, setGender] = useState<Gender>(initial?.gender ?? 'unknown');
   const [weight, setWeight] = useState(initial?.weight_kg != null ? String(initial.weight_kg) : '');
   const [neutered, setNeutered] = useState(initial?.neutered ?? false);
   const [medicineNote, setMedicineNote] = useState(initial?.medicine_note ?? '');
   const [localError, setLocalError] = useState<string | null>(null);
+
+  /** YYYY-MM-DD 문자열끼리 비교 — 시간대 영향을 받는 Date 객체 시각 비교를 피한다. */
+  const adoptedBeforeBirthError = useMemo(() => {
+    if (!birthDate || !adoptedAt) return null;
+    return adoptedAt < birthDate ? '입양일이 생년월일보다 빠를 수 없어요' : null;
+  }, [birthDate, adoptedAt]);
+
+  const canSubmit = !!name.trim() && !!birthDate && !!adoptedAt && !adoptedBeforeBirthError;
 
   const handlePhotoChange = async (file: File | null) => {
     if (!file) return;
@@ -58,17 +68,16 @@ export default function PetForm({
   };
 
   const handleSubmit = async () => {
-    if (!name.trim()) {
-      setLocalError('이름을 입력해주세요.');
-      return;
-    }
+    if (!canSubmit) return;
     setLocalError(null);
     await onSubmit({
       name: name.trim(),
       profile_emoji: emoji,
       photo_url: photoUrl,
       breed: breed.trim() || null,
-      birth_date: birthDate || null,
+      birth_date: birthDate,
+      adopted_at: adoptedAt,
+      adopted_at_is_estimated: adoptedAtIsEstimated,
       gender,
       weight_kg: weight ? Number(weight) : null,
       neutered,
@@ -123,7 +132,7 @@ export default function PetForm({
       </FormField>
 
       <div className="form-row">
-        <FormField label="품종">
+        <FormField label="품종 (선택)">
           <input className="input" value={breed} onChange={(e) => setBreed(e.target.value)} placeholder="예) 토이푸들" />
         </FormField>
         <FormField label="생년월일">
@@ -131,7 +140,22 @@ export default function PetForm({
         </FormField>
       </div>
 
-      <FormField label="성별">
+      <div className="form-row">
+        <FormField label="입양일">
+          <input type="date" className="input" value={adoptedAt} onChange={(e) => setAdoptedAt(e.target.value)} />
+          {adoptedBeforeBirthError && (
+            <p style={{ fontSize: 12, color: 'var(--color-danger)', marginTop: 4 }}>{adoptedBeforeBirthError}</p>
+          )}
+        </FormField>
+        <FormField label="입양일 정확도 (선택)">
+          <div className="option-grid" style={{ marginBottom: 0 }}>
+            <Chip label="정확함" active={!adoptedAtIsEstimated} onClick={() => setAdoptedAtIsEstimated(false)} />
+            <Chip label="대략적" active={adoptedAtIsEstimated} onClick={() => setAdoptedAtIsEstimated(true)} />
+          </div>
+        </FormField>
+      </div>
+
+      <FormField label="성별 (선택)">
         <div className="option-grid">
           {GENDER_OPTIONS.map((opt) => (
             <Chip key={opt.value} label={opt.label} active={gender === opt.value} onClick={() => setGender(opt.value)} />
@@ -140,7 +164,7 @@ export default function PetForm({
       </FormField>
 
       <div className="form-row">
-        <FormField label="체중 (kg)">
+        <FormField label="체중 (kg) (선택)">
           <input
             type="number"
             inputMode="decimal"
@@ -150,7 +174,7 @@ export default function PetForm({
             placeholder="예) 5.2"
           />
         </FormField>
-        <FormField label="중성화 여부">
+        <FormField label="중성화 여부 (선택)">
           <div className="option-grid">
             <Chip label="완료" active={neutered} onClick={() => setNeutered(true)} />
             <Chip label="안함" active={!neutered} onClick={() => setNeutered(false)} />
@@ -169,7 +193,7 @@ export default function PetForm({
 
       {localError && <div className="error-banner">{localError}</div>}
 
-      <PrimaryButton onClick={handleSubmit} disabled={submitting || uploading}>
+      <PrimaryButton onClick={handleSubmit} disabled={submitting || uploading || !canSubmit}>
         {uploading ? '사진 업로드 중...' : submitting ? '저장 중...' : submitLabel}
       </PrimaryButton>
     </div>

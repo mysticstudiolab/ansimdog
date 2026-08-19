@@ -65,6 +65,10 @@ alter table ansimdog.dogs add column if not exists meal_target smallint not null
 alter table ansimdog.dogs drop constraint if exists dogs_meal_target_check;
 alter table ansimdog.dogs add constraint dogs_meal_target_check check (meal_target between 1 and 10);
 
+-- 입양일 (PRD 확장 컬럼) — 기존 행이 있으므로 adopted_at은 nullable로 추가한다.
+alter table ansimdog.dogs add column if not exists adopted_at date;
+alter table ansimdog.dogs add column if not exists adopted_at_is_estimated boolean not null default false;
+
 create index if not exists dogs_owner_id_idx on ansimdog.dogs (owner_id);
 
 grant all on ansimdog.dogs to anon, authenticated;
@@ -96,7 +100,7 @@ create table if not exists ansimdog.daily_logs (
   walk_minutes integer not null default 0 check (walk_minutes >= 0),
   poop_count smallint not null default 0 check (poop_count >= 0),
   poop_status text not null default 'none' check (poop_status in ('normal', 'soft', 'hard', 'diarrhea', 'none')),
-  medicine_taken boolean not null default false,
+  medicine_taken boolean default false, -- null = 복용 없음(해당 없음), false = 아직 안 먹음, true = 복용 완료
   mood text not null default 'normal' check (mood in ('great', 'good', 'normal', 'bad', 'sick')),
   condition text not null default 'unrecorded' check (condition in ('unrecorded', 'normal', 'different', 'concerning')),
   symptom_tags text[] not null default '{}',
